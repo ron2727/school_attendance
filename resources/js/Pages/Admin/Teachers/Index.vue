@@ -1,26 +1,65 @@
 <template>
-    <MainContainer page-title="Classes">
-        <table class=" border-collapse w-full border">
-            <thead>
-                <tr>
-                    <td class=" px-3 py-2 text-sm font-bold border-b">Subject</td>
-                    <td class=" px-3 py-2 text-sm font-bold border-b">Teacher</td>
-                    <td class=" px-3 py-2 text-sm font-bold border-b">Grade & Section</td>
-                    <td class=" px-3 py-2 text-sm font-bold border-b">Time</td>
-                    <td class=" px-3 py-2 text-sm font-bold border-b">Academic Year</td>
-                    <td class=" px-3 py-2 text-sm font-bold border-b">Actions</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class=" px-3 py-2 text-sm">Subject</td>
-                </tr>
-            </tbody>
-        </table>
-    </MainContainer>
+   <MainContainer page-title="Teachers">
+      <div class="bg-white p-5 rounded">
+         <Link :href="route('teacher.create')" 
+               as="button" 
+               type="button"
+               class=" px-3 py-2 bg-indigo-600 text-sm text-white rounded my-3">
+            Add new teacher
+         </Link>
+         <div class="wrapper-search w-64 mt-5 mb-4">
+            <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search teacher..." />
+         </div>
+         <div class=" grid grid-cols-4 gap-5 mb-5" v-if="teachers.data.length">
+            <Card v-for="teacher in teachers.data">
+               <template #head>
+                  <div class=" bg-indigo-600 py-3">
+                     <div class=" w-14 h-14 rounded-full bg-white mx-auto"></div>
+                  </div>
+               </template>
+               <template #body>
+                  <h6 class=" text-sm py-3 text-gray-500 font-bold text-center">{{ teacher.firstName + ' ' + teacher.lastName}}</h6>
+                  <div class=" py-3 flex justify-center space-x-2">
+                     <Link :href="route('teacher.edit', { teacher: teacher.id })" as="button" type="button" class=" text-xs text-green-600">Edit</Link>
+                     <Link :href="route('teacher.edit', { teacher: teacher.id })" as="button" type="button" class=" text-xs text-red-600">Delete</Link>
+                  </div>
+               </template>
+            </Card>
+         </div>
+         <NoDataMessage v-else>No result found</NoDataMessage>
+         <Pagination v-if="teachers.data.length" :links="teachers.links" />
+      </div>
+   </MainContainer>
 </template>
 
-<script setup>
+<script setup> 
+import InputComponent from '../../Shared/InputComponent.vue';
+import Pagination from '../../Shared/Pagination.vue';
+import NoDataMessage from '../../Shared/NoDataMessage.vue';
+import Card from '../../Shared/Card.vue';
+import { Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue'  
+import { debounce } from 'lodash';
 
-</script>
  
+const props = defineProps({
+    teachers: Object,
+    filters: String,
+})
+
+const search = ref(props.filters)
+
+
+watch(search, debounce((newValue) => {
+   router
+   .get(
+         route('teacher.index'), 
+         {
+             search: newValue
+         }, 
+         {
+            preserveScroll: true,
+            preserveState: true
+         })
+}, 500));
+</script>

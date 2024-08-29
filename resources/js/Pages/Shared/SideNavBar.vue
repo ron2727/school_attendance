@@ -14,7 +14,7 @@
                 </NavLink>
             </li>
             <li class="px-3">
-                <NavLink>
+                <NavLink :href="route('teacher.index')" :active="pageName() === 'Teachers'">
                     <box-icon type='solid' name='user'></box-icon>
                     <span>Teachers</span>
                 </NavLink>
