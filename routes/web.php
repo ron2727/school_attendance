@@ -7,4 +7,6 @@ Route::get('/', function () {
 });
 
 
-Route::inertia('dashboard', 'Admin/Dashboard');
+Route::inertia('dashboard', 'Admin/Dashboard')->name('dashboard');
+
+Route::inertia('classes', 'Admin/Classes/Index')->name('classes.index');
