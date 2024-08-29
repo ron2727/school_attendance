@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '../fonts/Rubik-VariableFont_wght.ttf';
+
+*{
+    font-family: "Rubik", sans-serif;
+}
