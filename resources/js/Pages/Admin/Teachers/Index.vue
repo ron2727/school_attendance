@@ -1,12 +1,9 @@
 <template>
    <MainContainer page-title="Teachers">
       <div class="bg-white p-5 rounded">
-         <Link :href="route('teacher.create')" 
-               as="button" 
-               type="button"
-               class=" px-3 py-2 bg-indigo-600 text-sm text-white rounded my-3">
+         <ButtonAdd :href="route('teacher.create')">
             Add new teacher
-         </Link>
+         </ButtonAdd>
          <div class="wrapper-search w-64 mt-5 mb-4">
             <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search teacher..." />
          </div>
@@ -37,6 +34,7 @@ import InputComponent from '../../Shared/InputComponent.vue';
 import Pagination from '../../Shared/Pagination.vue';
 import NoDataMessage from '../../Shared/NoDataMessage.vue';
 import Card from '../../Shared/Card.vue';
+import ButtonAdd from '../../Shared/ButtonAdd.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue'  
 import { debounce } from 'lodash';

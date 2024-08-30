@@ -16,8 +16,8 @@ class TeacherRepository
 
     public function index($search)
     {
-        return User::query()
-                   ->when($search, function(Builder $query, $value){
+        return $this->teacher
+                    ->when($search, function(Builder $query, $value){
                        $query->where('firstName', 'LIKE', '%'. $value .'%')
                              ->orWhere('lastName', 'LIKE', '%'. $value .'%')
                              ->orWhere('email', 'LIKE', '%'. $value .'%');
@@ -45,4 +45,28 @@ class TeacherRepository
                ->find($id)
                ->update($data); 
     }
+
+    public function getTeachersWithClasses($search, $academic_year)
+    {
+        if (!$academic_year) {
+            $academic_year = date('Y');
+        }
+
+        return $this->teacher
+                    ->when($search, function(Builder $query, $value){
+                          $query->where('firstName', 'LIKE', '%'. $value .'%')
+                                ->orWhere('lastName', 'LIKE', '%'. $value .'%');
+                     })
+                    ->where('role', 'teacher') 
+                    ->whereHas('classes', function ($query) use ($academic_year){
+                        $query->where('academic_year', $academic_year);
+                    })
+                    ->with(['classes' => function ($query) use ($academic_year) {
+                        $query->where('academic_year', $academic_year);
+                     }])
+                    ->orderByDesc('id')
+                    ->paginate(12)
+                    ->withQueryString();
+    }
 }
+ 
