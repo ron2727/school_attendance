@@ -9,12 +9,12 @@
         <div class="profile mr-5">
             <DropDown align="left"> 
                 <template #trigger>
-                    John Doe
+                    {{ $page.props.auth.user.firstName + ' ' + $page.props.auth.user.lastName}}
                 </template>
                 <template #content>
                     <div class="py-3 flex flex-col w-max space-y-1 bg-white border rounded-lg">
-                        <Link class=" py-2 px-5 hover:bg-indigo-600 hover:text-white">Manage Profile</Link>
-                        <Link class=" py-2 px-5 hover:bg-indigo-600 hover:text-white">Logout</Link>
+                        <Link class=" py-2 px-5 hover:bg-indigo-600 hover:text-white" as="a">Manage Profile</Link>
+                        <Link :href="route('login.destroy')" method="delete" class=" py-2 px-5 hover:bg-indigo-600 hover:text-white" as="a">Logout</Link>
                     </div>
                 </template>
             </DropDown> 

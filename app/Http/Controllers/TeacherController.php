@@ -82,4 +82,16 @@ class TeacherController extends Controller
     {
         //
     }
+
+    public function teacherClasses(Request $request)
+    {
+        $academic_year = $request->input('academic_year');
+        if (!$academic_year) {
+            $academic_year = date('Y');
+        }
+        
+        $classes = $this->teacherRepository->getTeacherClasses($academic_year);
+
+        return inertia('Teacher/Classes/Index', ['classes' => $classes[0]]);
+    }
 }

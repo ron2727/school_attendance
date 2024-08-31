@@ -47,4 +47,13 @@ class ClassesRepository
     {
         return $this->classes->find($id)->update($data);
     }
+
+    public function classes($id, $academic_year)
+    {
+        return $this->classes
+                    ->where('user_id', $id)
+                    ->where('academic_year', $academic_year)
+                    ->get();
+    }
+    
 }

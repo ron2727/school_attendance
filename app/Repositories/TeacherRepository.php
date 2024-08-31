@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherRepository
 {
@@ -66,5 +67,29 @@ class TeacherRepository
                     ->paginate(12)
                     ->withQueryString();
     }
+
+    public function getTeacherClasses($academic_year)
+    { 
+
+        return $this->teacher::query()
+                              ->where('id', Auth::user()->id)
+                              ->where('role', 'teacher')
+                              ->with(['classes' => function ($query) use ($academic_year) {
+                                                         $query->where('academic_year', $academic_year);
+                                                    }])
+                              ->whereHas('classes', function ($query) use ($academic_year) {
+                                                         $query->where('academic_year', $academic_year);
+                              })
+                              ->get();
+    }
 }
- 
+// return $this->teacher::query()
+// ->where('id', Auth::user()->id) 
+// ->where('role', 'teacher') 
+// ->with(['classes' => function ($query) use ($academic_year) {
+//     $query->where('academic_year', $academic_year);
+//  }]) 
+// ->whereHas('classes', function ($query) use ($academic_year){
+//     $query->where('academic_year', $academic_year);
+// })
+// ->get();
