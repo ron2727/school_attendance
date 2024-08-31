@@ -16,12 +16,10 @@ class TeacherRepository
 
     public function index($search)
     {
-        return $this->teacher
+        return $this->teacher 
                     ->when($search, function(Builder $query, $value){
-                       $query->where('firstName', 'LIKE', '%'. $value .'%')
-                             ->orWhere('lastName', 'LIKE', '%'. $value .'%')
-                             ->orWhere('email', 'LIKE', '%'. $value .'%');
-                   })
+                       $query->where('firstName', 'LIKE', '%'. $value .'%');  
+                   }) 
                    ->where('role', 'teacher')
                    ->orderByDesc('id')
                    ->paginate(12)

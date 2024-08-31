@@ -17,10 +17,7 @@
 
 <script setup>
 import InputComponent from '../../Shared/InputComponent.vue';
-import { useForm } from '@inertiajs/vue3';
-defineProps({
-    teachers: Object
-})
+import { useForm } from '@inertiajs/vue3'; 
 
 const form = useForm({
     firstName: '',

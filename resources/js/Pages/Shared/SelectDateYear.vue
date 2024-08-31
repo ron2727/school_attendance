@@ -1,11 +1,10 @@
 <template>
     <div class="wrapper-input space-y-1">
         <label :for="name" class=" text-gray-600 text-sm font-bold">{{label}}</label>
-        <select 
-               :type="inputType"  
+        <select
                :value="modelValue"
                @change="$emit('update:modelValue', $event.target.value)" 
-               class=" w-full text-sm text-gray-500 focus:outline-indigo-500 px-2 py-1.5 border border-gray-300 rounded">
+               class=" relative bottom-0 w-full text-sm text-gray-500 focus:outline-indigo-500 px-2 py-1.5 border border-gray-300 rounded">
            <option :value="new Date().getFullYear()" selected>{{ new Date().getFullYear() }}</option>
            <option v-for="year in years()" :value="year">{{ year }}</option>
         </select> 
@@ -16,11 +15,7 @@
 defineProps({
     label: String,
     name: String,  
-    modelValue: String,
-    inputType: {
-        type: String,
-        default: 'text'
-    }
+    modelValue: String, 
 })
 
 defineEmits(['update:modelValue'])

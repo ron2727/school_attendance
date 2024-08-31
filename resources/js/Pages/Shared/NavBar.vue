@@ -7,22 +7,22 @@
             </h1>
         </div>
         <div class="profile mr-5">
-            <Dropdown>
+            <DropDown align="left"> 
                 <template #trigger>
                     John Doe
                 </template>
                 <template #content>
-                    <div class="py-3 flex flex-col space-y-1">
+                    <div class="py-3 flex flex-col w-max space-y-1 bg-white border rounded-lg">
                         <Link class=" py-2 px-5 hover:bg-indigo-600 hover:text-white">Manage Profile</Link>
                         <Link class=" py-2 px-5 hover:bg-indigo-600 hover:text-white">Logout</Link>
                     </div>
                 </template>
-            </Dropdown>
+            </DropDown> 
         </div>
     </div>
 </template>
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import Dropdown from './Dropdown.vue';
+import DropDown from './DropDown.vue';
 </script> 

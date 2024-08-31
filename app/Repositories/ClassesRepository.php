@@ -32,5 +32,19 @@ class ClassesRepository
                      ->paginate(12)
                      ->withQueryString();
     }
+
+    public function store($data)
+    {
+        return $this->classes->create($data);
+    }
     
+    public function show($id)
+    {
+        return $this->classes->where('id', $id)->with('user')->get();
+    }
+
+    public function update($data, $id)
+    {
+        return $this->classes->find($id)->update($data);
+    }
 }
