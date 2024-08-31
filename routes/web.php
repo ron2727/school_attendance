@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ClassesController; 
+use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Models\Classes;
 use App\Models\User;
@@ -19,7 +20,7 @@ Route::inertia('dashboard', 'Admin/Dashboard')->name('dashboard');
 
 Route::resource('teacher', TeacherController::class);
 Route::resource('classes', ClassesController::class);
-
+Route::resource('student', StudentController::class);
 Route::get('test', function(Request $request){
     $academic_year = $request->input('academic_year');
 

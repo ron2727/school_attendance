@@ -33,4 +33,11 @@ class ClassesFactory extends Factory
             'academic_year' => '2023'
         ];
     }
+
+    public function userId($value): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_id' => $value,
+        ]);
+    }
 }

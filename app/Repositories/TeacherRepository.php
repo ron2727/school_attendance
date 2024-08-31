@@ -40,8 +40,8 @@ class TeacherRepository
     {
         
         return $this->teacher
-               ->find($id)
-               ->update($data); 
+                    ->find($id)
+                    ->update($data); 
     }
 
     public function getTeachersWithClasses($search, $academic_year)
