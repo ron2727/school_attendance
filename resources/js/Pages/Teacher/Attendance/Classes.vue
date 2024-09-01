@@ -1,10 +1,10 @@
 <template>
-    <MainContainer page-title="My Classes">
+    <MainContainer page-title="Mark Attendance">
        <div class="bg-white p-5 rounded">  
           <div class=" grid grid-cols-4 gap-5 mb-5" v-if="classes.length">
             <Link  v-for="teacherClass in classes" 
                    :key="teacherClass.id" 
-                   :href="route('teacher.classes.students', {class: teacherClass.id})">
+                   :href="route('teacher.attendance.students', {class: teacherClass.id})">
              <Card>
                 <template #head>
                    <div class=" flex items-center p-3 space-x-2 bg-indigo-600 rounded-t-lg">

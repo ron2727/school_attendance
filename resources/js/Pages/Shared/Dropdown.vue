@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown relative">
+    <div class="dropdown relative w-max">
         <div
             @click="show = true" 
             id="trigger"

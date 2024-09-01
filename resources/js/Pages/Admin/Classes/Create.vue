@@ -76,8 +76,7 @@ const form = useForm({
     time_from: '',
     time_to: '',
     academic_year: new Date().getFullYear(),
-})
-
+}) 
 watch(search, debounce((newValue) => {
    router
    .get(

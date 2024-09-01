@@ -8,12 +8,9 @@ use App\Repositories\StudentRepository;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
-{
-    protected $studentRepository;
+{ 
 
-    public function __construct(StudentRepository $studentRepository) {
-        $this->studentRepository = $studentRepository;
-    }
+    public function __construct(protected StudentRepository $studentRepository) {}
     /**
      * Display a listing of the resource.
      */

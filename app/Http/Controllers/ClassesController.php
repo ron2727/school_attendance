@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClassesRequest;
-use App\Models\Classes;
+use App\Models\Classes; 
 use App\Repositories\ClassesRepository;
+use App\Repositories\StudentClassesRepository;
+use App\Repositories\StudentRepository;
 use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
 
 class ClassesController extends Controller
-{
-    protected $classesRepository;
-    protected $teacherRepository;
+{ 
 
-    public function __construct(ClassesRepository $classesRepository, TeacherRepository $teacherRepository) {
-        $this->classesRepository = $classesRepository;
-        $this->teacherRepository = $teacherRepository;
-    }
+    public function __construct(protected ClassesRepository $classesRepository, 
+                                protected TeacherRepository $teacherRepository,
+                                protected StudentRepository $studentRepository,
+                                protected StudentClassesRepository $studentClassesRepository) {}
     /**
      * Display a listing of the resource.
      */
@@ -101,5 +101,31 @@ class ClassesController extends Controller
     public function destroy(Classes $classes)
     {
         //
+    }
+
+    public function classes(Request $request)
+    {
+        $academic_year = $request->input('academic_year');
+        if (!$academic_year) {
+            $academic_year = date('Y');
+        }
+        
+        $classes = $this->classesRepository->classes($request->user()->id, $academic_year);
+
+        return inertia('Teacher/Classes/Index', ['classes' => $classes]);
+    }
+
+    public function classStudents(Request $request, $id)
+    {  
+        $students = $this->studentRepository->index($request->input('search'));
+        $teacherClass = $this->classesRepository->find($id);
+        $studentsOfClasses = $this->studentClassesRepository->studentsOfClass($id);
+
+        return inertia('Teacher/Classes/Students', [ 
+                                                    'teacherClass' => $teacherClass,
+                                                    'studentsClass' => $studentsOfClasses,
+                                                    'students' => $students,
+                                                    'filters' => $request->input('search')
+                                                   ]);
     }
 }

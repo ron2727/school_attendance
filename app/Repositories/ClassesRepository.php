@@ -38,6 +38,11 @@ class ClassesRepository
         return $this->classes->create($data);
     }
     
+    public function find($id)
+    {
+        return $this->classes->find($id);
+    }
+
     public function show($id)
     {
         return $this->classes->where('id', $id)->with('user')->get();
