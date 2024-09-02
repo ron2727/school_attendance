@@ -6,6 +6,7 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\StudentClassesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherReportController;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\StudentClasses;
@@ -17,7 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
- 
+use Spatie\LaravelPdf\Facades\Pdf;
+
 Route::middleware('guest')->group(function(){ 
     Route::inertia('/','Auth/Login')->name('login');
     Route::post('auth', [LoginController::class, 'authenticate'])->name('login.auth'); 
@@ -36,6 +38,10 @@ Route::middleware('auth')->group(function(){
         Route::get('teacher/attendance/{class}/students', [AttendanceController::class, 'classStudents'])->name('teacher.attendance.students');
         Route::post('teacher/attendance/students', [AttendanceController::class, 'store'])->name('teacher.attendance.students.store');
         Route::put('teacher/attendance/students', [AttendanceController::class, 'update'])->name('teacher.attendance.students.update');
+
+        Route::get('teacher/report', [TeacherReportController::class, 'index'])->name('teacher.report.index');
+        Route::get('teacher/report/{class}/generate', [TeacherReportController::class, 'generate'])->name('teacher.report.generate');
+        Route::post('teacher/report/generated', [TeacherReportController::class, 'generated'])->name('teacher.report.generated');
 
     });
 
@@ -60,4 +66,12 @@ Route::get('test', function(Request $request, StudentClassesRepository $studentC
               ->where('class_id', 8)
               ->get();
  
+});
+
+Route::get('pdf', function(){
+    
+    return Pdf::view('report.template.pdf.DailyAttendanceReport', ['attendances' => null])
+              ->format('A4')
+              ->margins(25.4, 25.4, 25.4, 25.4)
+              ->save('report.pdf');
 });

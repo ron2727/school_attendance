@@ -82,14 +82,4 @@ class TeacherRepository
                               })
                               ->get();
     }
-}
-// return $this->teacher::query()
-// ->where('id', Auth::user()->id) 
-// ->where('role', 'teacher') 
-// ->with(['classes' => function ($query) use ($academic_year) {
-//     $query->where('academic_year', $academic_year);
-//  }]) 
-// ->whereHas('classes', function ($query) use ($academic_year){
-//     $query->where('academic_year', $academic_year);
-// })
-// ->get();
+} 

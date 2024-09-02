@@ -115,11 +115,11 @@ class ClassesController extends Controller
         return inertia('Teacher/Classes/Index', ['classes' => $classes]);
     }
 
-    public function classStudents(Request $request, $id)
+    public function classStudents(Request $request, string $class_id)
     {  
         $students = $this->studentRepository->index($request->input('search'));
-        $teacherClass = $this->classesRepository->find($id);
-        $studentsOfClasses = $this->studentClassesRepository->studentsOfClass($id);
+        $teacherClass = $this->classesRepository->find($class_id);
+        $studentsOfClasses = $this->studentClassesRepository->studentsOfClass($class_id);
 
         return inertia('Teacher/Classes/Students', [ 
                                                     'teacherClass' => $teacherClass,

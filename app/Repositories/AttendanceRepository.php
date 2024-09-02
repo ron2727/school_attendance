@@ -50,4 +50,13 @@ class AttendanceRepository
                    ->where('date', date('Y-m-d'))
                    ->count() > 0;
     }
+
+    public function findAttendanceRecord($class_id, $date)
+    {
+        return $this->attendance
+                    ->where('class_id', $class_id)
+                    ->where('date', $date)
+                    ->with('student')
+                    ->get();
+    }
 }
