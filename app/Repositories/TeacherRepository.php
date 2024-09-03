@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TeacherRepository
 {
@@ -81,5 +82,12 @@ class TeacherRepository
                                                          $query->where('academic_year', $academic_year);
                               })
                               ->get();
+    }
+
+    public function count(){
+        
+        return $this->teacher 
+                    ->where('role', 'teacher')
+                    ->count();
     }
 } 

@@ -44,4 +44,9 @@ class StudentRepository
                     ->find($id)
                     ->update($data); 
     }
+
+    public function count(){
+        
+        return $this->student->count();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Attendance;
+use Illuminate\Support\Facades\DB;
 
 class AttendanceRepository
 {
@@ -57,6 +58,15 @@ class AttendanceRepository
                     ->where('class_id', $class_id)
                     ->where('date', $date)
                     ->with('student')
+                    ->get();
+    }
+
+    public function dailyAttendanceTotal()
+    {
+        return $this->attendance
+                    ->select(DB::raw('count(*) as total, status'))
+                    ->where('date', date('Y-m-d'))
+                    ->groupBy('status')
                     ->get();
     }
 }

@@ -61,4 +61,8 @@ class ClassesRepository
                     ->get();
     }
     
+    public function count(){
+        
+        return $this->classes->count();
+    }
 }

@@ -3,10 +3,12 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentClassesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherReportController;
+use App\Models\Attendance;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\StudentClasses;
@@ -46,9 +48,7 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::middleware('admin')->group(function(){ 
-        Route::get('dashboard', function(){
-            return inertia('Admin/Dashboard');
-        })->name('dashboard');
+        Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard');
         Route::resource('teacher', TeacherController::class);
         Route::resource('classes', ClassesController::class);
         Route::resource('student', StudentController::class); 
@@ -60,18 +60,7 @@ Route::middleware('auth')->group(function(){
 Route::get('test', function(Request $request, StudentClassesRepository $studentClassesRepository){
     
 
-    return  DB::table('students_classes')
-              ->join('students', 'students_classes.student_id', '=', 'students.id')
-              ->select('students.*')
-              ->where('class_id', 8)
-              ->get();
+    return  Attendance::count();
  
 });
-
-Route::get('pdf', function(){
-    
-    return Pdf::view('report.template.pdf.DailyAttendanceReport', ['attendances' => null])
-              ->format('A4')
-              ->margins(25.4, 25.4, 25.4, 25.4)
-              ->save('report.pdf');
-});
+ 
