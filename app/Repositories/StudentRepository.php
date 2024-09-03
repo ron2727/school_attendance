@@ -49,4 +49,6 @@ class StudentRepository
         
         return $this->student->count();
     }
+
+     
 }

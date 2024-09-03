@@ -22,4 +22,9 @@ class StudentClassesRepository
                   ->where('class_id', $class_id)
                   ->get();
     }
+
+    public function find($column, $value){
+       
+        return $this->studentClasses->where($column, $value)->get();
+    }
 }

@@ -1,8 +1,7 @@
 <template>
     <MainContainer page-title="Dashboard">
-        <div class=" max-w-2xl grid grid-cols-3 gap-x-7"> 
-           <Card label="TEACHER" :total="teacherTotal" icon="user" solid="true"/>
-           <Card label="CLASS" :total="classesTotal" icon="book"/>
+        <div class=" max-w-2xl grid grid-cols-3 gap-x-7">  
+           <Card label="CLASS" :total="classesTotal" icon="book" solid="true"/>
            <Card label="STUDENT" :total="studentTotal" icon="user"/>  
         </div>
         <div class="mt-5 p-5 bg-white rounded-lg">
@@ -11,7 +10,7 @@
                 <span class=" text-gray-500">{{ dateToday }}</span>
             </div>
             <Chart
-               title="Daily Attendance Total"
+               title="Absents for each class"
                type="bar" 
               :data="data"
               :options="options"/>
@@ -22,25 +21,21 @@
 <script setup> 
 import Card from '../Shared/Dashboard/Card.vue';
 import Chart from '../Shared/Dashboard/Chart.vue';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
-    chartData: Array,
-    teacherTotal: String, 
+    chartData: Array, 
     classesTotal: String, 
     studentTotal: String,
     dateToday: String
 }) 
-
-const labels = ref(null);
-const dataDataSets = ref(null);
-
+ 
 const data = ref({
-    labels: props.chartData.map(item => item.status) ,
+    labels: props.chartData.subjects,
     datasets: [{
-        label: 'Total',
-        data: props.chartData.map(item => item.total), 
-        backgroundColor: 'rgb(79 70 229)',
+        label: 'Absents',
+        data: props.chartData.totals,  
+        backgroundColor: 'rgb(79 70 229)',	
     }],
     
 })
@@ -49,7 +44,7 @@ const options = ref({
         scales: {
             y: {
                 beginAtZero: true, 
-                max: props.chartData.map(item => item.total).reduce((total, item) => item + total)
+                max: props.chartData.totals.reduce((total, item) => item + total)
             }
         },
         plugins: {
@@ -66,7 +61,7 @@ const options = ref({
             elements: {
                 bar: {
                   borderRadius: 50,
-                  borderWidth: 5, 
+                  borderWidth: 5,
                 }
             }
         }

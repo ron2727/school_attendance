@@ -2,18 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Models\Classes;
-use App\Models\User;
+use App\Models\Classes; 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class ClassesRepository
-{
-    private $classes;
+{ 
 
-    public function __construct(Classes $classes)
-    {
-        $this->classes = $classes;
-    }
+    public function __construct(
+        private Classes $classes, 
+        private StudentClassesRepository $studentClassesRepository
+    ){}
 
     public function index($search , $academic_year)
     {
@@ -64,5 +63,45 @@ class ClassesRepository
     public function count(){
         
         return $this->classes->count();
+    }
+
+    public function teacherClassesCount(){
+        
+        return $this->classes
+                    ->where('user_id', Auth::user()->id)
+                    ->count();
+    } 
+
+    public function studentsClassesCount()
+    {
+        return $this->classes
+                    ->where('user_id', Auth::user()->id) 
+                    ->get() 
+                    ->map(function($item) {
+                        $studentClasses = $this->studentClassesRepository->find('class_id', $item['id']);  
+                        return $studentClasses->count() ?? 0;
+                    })->reduce(fn($carry, $item) => $carry + $item);
+    }
+
+    public function absentsEachClass()
+    {
+        return  $this->classes
+                     ->where('user_id', Auth::user()->id) 
+                     ->where('academic_year', date('Y'))
+                     ->with(['attendance' => function ($query) {
+                         $query->where('status', 'absent')
+                               ->where('date', date('Y-m-d'));
+                      }])->get()
+                     ->map(function($item) { 
+                        return [
+                            'subject' => $item['subject'].' ('.$item['grade_section'].')',
+                            'total' => count($item['attendance'])
+                        ];
+                     })->reduce(function($carry, $item){
+                         
+                         $carry['subjects']->push($item['subject']);
+                         $carry['totals']->push($item['total']);
+                         return $carry;
+                     }, ['subjects' => collect([]), 'totals' => collect([])]);
     }
 }

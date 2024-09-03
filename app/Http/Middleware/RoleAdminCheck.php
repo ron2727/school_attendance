@@ -17,7 +17,7 @@ class RoleAdminCheck
     {
 
         if ($request->user()->role !== 'admin') {
-            return redirect()->route('teacher.classes.index');
+            return redirect()->route('teacher.dashboard');
         }
 
         return $next($request);

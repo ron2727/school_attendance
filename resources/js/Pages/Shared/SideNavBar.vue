@@ -34,6 +34,12 @@
         </ul>
         <ul class=" text-gray-500 space-y-4" v-else>
             <li class="px-3">
+                <NavLink :href="route('teacher.dashboard')" :active="pageName() === 'Dashboard'">
+                    <box-icon type='solid' name='dashboard'></box-icon>
+                    <span>Dashboard</span>
+                </NavLink>
+            </li>
+            <li class="px-3">
                 <NavLink :href="route('teacher.classes.index')" :active="pageName() === 'Classes'">
                     <box-icon type='solid' name='book'></box-icon>
                     <span>My Classes</span>

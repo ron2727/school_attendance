@@ -18,19 +18,19 @@ class Classes extends Model
 
     protected $table = 'classes';
 
-    // public function timeFrom(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (string $value) => date('h:i a', strtotime($value)),
-    //     );
-    // }
+    public function timeFrom(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => date('h:i a', strtotime($value)),
+        );
+    }
 
-    // public function timeTo(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (string $value) => date('h:i a', strtotime($value)),
-    //     );
-    // }
+    public function timeTo(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => date('h:i a', strtotime($value)),
+        );
+    }
 
     public function students(): HasMany
     {
@@ -42,8 +42,15 @@ class Classes extends Model
         return $this->hasMany(StudentClasses::class, 'class_id');
     }
 
+    public function attendance(): HasMany
+    {
+        return $this->hasMany(Attendance::class, 'class_id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
+    
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\AttendanceRepository;
-use App\Repositories\ClassesRepository;
+use App\Repositories\ClassesRepository; 
 use App\Repositories\StudentRepository;
 use App\Repositories\TeacherRepository;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class DashboardController extends Controller
          protected AttendanceRepository $attendanceRepository, 
          protected TeacherRepository $teacherRepository,
          protected StudentRepository $studentRepository,
-         protected ClassesRepository $classesRepository
+         protected ClassesRepository $classesRepository, 
     ) {}
 
     public function admin()
@@ -29,6 +29,21 @@ class DashboardController extends Controller
                                              'teacherTotal' => $teacher_total,
                                              'classesTotal' => $classes_total,
                                              'studentTotal' => $student_total,
+                                             'dateToday' => date('F d, Y')
                                           ]);
     }
+
+    public function teacher()
+    {  
+        $classes_total = $this->classesRepository->count();
+        $student_total = $this->classesRepository->studentsClassesCount();
+        $absent_each_class = $this->classesRepository->absentsEachClass();
+        
+        return inertia('Teacher/Dashboard', [  
+                                             'classesTotal' => $classes_total,
+                                             'studentTotal' => $student_total,
+                                             'chartData' => $absent_each_class,
+                                             'dateToday' => date('F d, Y')
+                                          ]);
+    } 
 }

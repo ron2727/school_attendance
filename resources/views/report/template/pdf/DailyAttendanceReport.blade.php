@@ -18,8 +18,12 @@
             <span class=" font-bold">Teacher: </span>
             <span>{{ Auth::user()->firstName. ' ' .Auth::user()->lastName}}</span>
          </div>
-        <div class="text-gray-700 text-sm space-x-1 mt-1">
-            <span class=" font-bold">Time of class: </span>
+         <div class="text-gray-700 text-sm space-x-1 mt-1">
+            <span class=" font-bold">Grade and Section: </span>
+            <span>{{ $class->grade_section }}</span>
+         </div>
+         <div class="text-gray-700 text-sm space-x-1 mt-1">
+            <span class=" font-bold">Time: </span>
             <span>{{ $class->time_from. ' - ' .$class->time_to }}</span>
          </div>
          <div class="text-gray-700 text-sm space-x-1 mt-1">

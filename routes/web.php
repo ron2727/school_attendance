@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function(){
     Route::delete('auth', [LoginController::class, 'destroy'])->name('login.destroy'); 
 
     Route::middleware('teacher')->group(function(){  
+        Route::get('teacher/dashboard', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
+
         Route::get('teacher/classes', [ClassesController::class, 'classes'])->name('teacher.classes.index');
         Route::get('teacher/classes/{class}/students', [ClassesController::class, 'classStudents'])->name('teacher.classes.students');
         Route::post('teacher/classes/students', [StudentClassesController::class, 'store'])->name('teacher.classes.students.store');
@@ -57,10 +59,26 @@ Route::middleware('auth')->group(function(){
 });
 
 
-Route::get('test', function(Request $request, StudentClassesRepository $studentClassesRepository){
+Route::get('test', function(Request $request){
     
 
-    return  Attendance::count();
+    return  Classes::where('user_id', 2) 
+                   ->where('academic_year', date('Y'))
+                   ->with(['attendance' => function ($query) {
+                         $query->where('status', 'absent')
+                               ->where('date', date('Y-m-d', strtotime('2024-09-03')));
+                    }])->get()
+                    ->map(function($item) { 
+                        return [
+                            'subject' => $item['subject'].'('.$item['grade_section'].')',
+                            'total' => count($item['attendance'])
+                        ];
+                     })->reduce(function($carry, $item){
+                         
+                         $carry['subject']->push($item['subject']);
+                         $carry['total']->push($item['total']);
+                         return $carry;
+                     }, ['subject' => collect([]), 'total' => collect([])]);
  
 });
- 
+  
