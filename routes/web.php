@@ -4,10 +4,12 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentClassesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherReportController;
+use App\Http\Controllers\UserController;
 use App\Models\Attendance;
 use App\Models\Classes;
 use App\Models\Student;
@@ -51,9 +53,14 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('admin')->group(function(){ 
         Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard');
-        Route::resource('teacher', TeacherController::class);
-        Route::resource('classes', ClassesController::class);
-        Route::resource('student', StudentController::class); 
+        Route::resources([
+            'teacher' => TeacherController::class,
+            'classes' => ClassesController::class,
+            'student' => StudentController::class
+        ]);  
+        Route::get('admin/profile', [ProfileController::class , 'index'])->name('admin.profile');
+        Route::put('admin/profile', [ProfileController::class , 'update'])->name('admin.update');
+        Route::put('admin/profile/change-password', [ProfileController::class , 'changePassword'])->name('admin.change-password');
     }); 
 
 });

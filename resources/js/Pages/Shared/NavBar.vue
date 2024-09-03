@@ -13,7 +13,7 @@
                 </template>
                 <template #content>
                     <div class="py-3 flex flex-col w-max space-y-1 bg-white border rounded-lg">
-                        <Link class=" py-2 px-5 hover:bg-indigo-600 hover:text-white" as="a">Manage Profile</Link>
+                        <Link :href="route(manageProfileRoutes[$page.props.auth.user.role])" class=" py-2 px-5 hover:bg-indigo-600 hover:text-white" as="a">Manage Profile</Link>
                         <Link :href="route('login.destroy')" method="delete" class=" py-2 px-5 hover:bg-indigo-600 hover:text-white" as="a">Logout</Link>
                     </div>
                 </template>
@@ -22,7 +22,13 @@
     </div>
 </template>
 
-<script setup>
-import { Link } from '@inertiajs/vue3';
+<script setup> 
 import DropDown from './DropDown.vue';
+import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const manageProfileRoutes = ref({
+    teacher: 'teacher.profile',
+    admin: 'admin.profile'
+})
 </script> 
