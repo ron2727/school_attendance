@@ -1,5 +1,5 @@
 <template>
-    <div class="card border shadow-md cursor-pointer rounded-lg">
+    <div class="card border cursor-pointer rounded-lg hover:shadow-md">
         <div class="card-head"> 
             <slot name="head" />
         </div>

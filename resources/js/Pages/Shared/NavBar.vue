@@ -9,7 +9,8 @@
         <div class="profile mr-5">
             <DropDown align="left"> 
                 <template #trigger>
-                    {{ $page.props.auth.user.firstName + ' ' + $page.props.auth.user.lastName}}
+                    <span class=" text-sm">{{ $page.props.auth.user.firstName + ' ' + $page.props.auth.user.lastName}}</span>
+                    <box-icon type='solid' name='chevron-down' size="xs" class="ml-1"></box-icon>
                 </template>
                 <template #content>
                     <div class="py-3 flex flex-col w-max space-y-1 bg-white border rounded-lg">

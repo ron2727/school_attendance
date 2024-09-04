@@ -8,20 +8,20 @@
             <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search teacher..." />
          </div>
          <div class=" grid grid-cols-4 gap-5 mb-5" v-if="teachers.data.length">
-            <Card v-for="teacher in teachers.data">
+            <Link v-for="teacher in teachers.data" :key="teacher.id" :href="route('teacher.edit', { teacher: teacher.id })" as="button" type="button" class=" text-xs text-green-600">
+            <Card>
                <template #head>
-                  <div class=" bg-indigo-600 py-3">
-                     <div class=" w-14 h-14 rounded-full bg-white mx-auto"></div>
+                  <div class=" bg-indigo-600 py-3 rounded-t-lg">
+                     <div class="mx-auto w-12 h-12 bg-white rounded-full flex justify-center items-center">
+                        <box-icon type='solid' name='user' color="indigo" size="sm"></box-icon>
+                     </div>
                   </div>
                </template>
                <template #body>
                   <h6 class=" text-sm py-3 text-gray-500 font-bold text-center">{{ teacher.firstName + ' ' + teacher.lastName}}</h6>
-                  <div class=" py-3 flex justify-center space-x-2">
-                     <Link :href="route('teacher.edit', { teacher: teacher.id })" as="button" type="button" class=" text-xs text-green-600">Edit</Link>
-                     <Link :href="route('teacher.edit', { teacher: teacher.id })" as="button" type="button" class=" text-xs text-red-600">Delete</Link>
-                  </div>
                </template>
             </Card>
+            </Link>
          </div>
          <NoDataMessage v-else>No result found</NoDataMessage>
          <Pagination v-if="teachers.data.length" :links="teachers.links" />
