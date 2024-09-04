@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function(){
         Route::get('teacher/report/{class}/generate', [TeacherReportController::class, 'generate'])->name('teacher.report.generate');
         Route::post('teacher/report/generated', [TeacherReportController::class, 'generated'])->name('teacher.report.generated');
 
+        Route::get('teacher/profile', [ProfileController::class , 'index'])->name('teacher.profile');
+        Route::put('teacher/profile', [ProfileController::class , 'update'])->name('teacher.profile.update');
+        Route::put('teacher/profile/change-password', [ProfileController::class , 'changePassword'])->name('teacher.change-password');
     });
 
     Route::middleware('admin')->group(function(){ 
