@@ -26,7 +26,7 @@
                 </NavLink>
             </li>
             <li class="px-3">
-                <NavLink>
+                <NavLink :href="route('admin.report.index')" :active="pageName() === 'Report'">
                     <box-icon name='report' type='solid'></box-icon>
                     <span>Report</span>
                 </NavLink>

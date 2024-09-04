@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClassesController;
@@ -16,6 +17,7 @@ use App\Models\Student;
 use App\Models\StudentClasses;
 use App\Models\User;
 use App\Repositories\StudentClassesRepository;
+use App\Services\GenerateReportServices;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -61,28 +63,87 @@ Route::middleware('auth')->group(function(){
             'classes' => ClassesController::class,
             'student' => StudentController::class
         ]);  
-        Route::get('admin/profile', [ProfileController::class , 'index'])->name('admin.profile');
-        Route::put('admin/profile', [ProfileController::class , 'update'])->name('admin.update');
-        Route::put('admin/profile/change-password', [ProfileController::class , 'changePassword'])->name('admin.change-password');
+        Route::get('report', [AdminReportController::class, 'index'])->name('admin.report.index');
+        Route::post('report/generate', [AdminReportController::class, 'generate'])->name('admin.report.generate'); 
+
+        Route::get('profile', [ProfileController::class , 'index'])->name('admin.profile');
+        Route::put('profile', [ProfileController::class , 'update'])->name('admin.update');
+        Route::put('profile/change-password', [ProfileController::class , 'changePassword'])->name('admin.change-password');
     }); 
 
 });
 
 
-Route::get('test', function(Request $request){
+Route::get('test', function(Request $request, GenerateReportServices $generateReport){
     
 
-    return  Attendance::query()
-                 ->select(DB::raw('count(*) as total, status'))
-                 ->where('date', date('Y-m-d', strtotime('2024-09-04')))
-                 ->groupBy('status')
-                 ->get()
-                 ->reduce(function($carry, $item){ 
-                     $carry['status']->push(ucfirst($item['status']));
-                     $carry['totals']->push($item['total']);
+    return $generateReport->generateAdminReport('2024-09-03');
+ 
+});
 
-                     return $carry;
-                 }, ['status' => collect([]), 'totals' => collect([])]);
+Route::get('tests', function(Request $request, GenerateReportServices $generateReport){
+    
+
+    return  User::where('role', 'teacher')->
+                 with(['classes' => function($query){
+                     $query->where('academic_year', date('Y'));
+                 }])->
+                 whereHas('classes', function($query){
+                    $query->where('academic_year', date('Y'));
+                 })->get()
+                 ->map(function($item){
+                       
+                    foreach ($item['classes'] as $key => $class) {
+                       $item['classes'][$key]['students'] = StudentClasses::where('class_id', $class['id'])->count();
+                       $item['classes'][$key]['present_total'] = Attendance::where('class_id', $class['id'])
+                                                                            ->where('date', date('Y-m-d', strtotime('2024-09-03')))
+                                                                            ->where('status', 'present')
+                                                                            ->count();
+                       $item['classes'][$key]['absent_total'] = Attendance::where('class_id', $class['id'])
+                                                                            ->where('date', date('Y-m-d', strtotime('2024-09-03')))
+                                                                            ->where('status', 'absent')
+                                                                            ->count();                                                   
+                    }
+                       $item['presents_overall_total'] = collect($item['classes'])
+                                                         ->reduce(fn($carry, $item) => $carry + $item['present_total'], 0);
+                       $item['absents_overall_total'] = collect($item['classes'])
+                                                         ->reduce(fn($carry, $item) => $carry + $item['absent_total'], 0);
+                       $item['students_overall_total'] = collect($item['classes'])
+                                                         ->reduce(fn($carry, $item) => $carry + $item['students'], 0); 
+                       $item['classes'] = count($item['classes']);
+
+                       return $item;
+                 });
  
 });
   
+// return  User::where('role', 'teacher')->
+//                  with(['classes' => function($query){
+//                      $query->where('academic_year', date('Y'));
+//                  }])->
+//                  whereHas('classes', function($query){
+//                     $query->where('academic_year', date('Y'));
+//                  })->get()
+//                  ->map(function($item){
+                       
+//                     foreach ($item['classes'] as $key => $class) {
+//                        $item['classes'][$key]['students'] = StudentClasses::where('class_id', $class['id'])->count();
+//                        $item['classes'][$key]['present_total'] = Attendance::where('class_id', $class['id'])
+//                                                                             ->where('date', date('Y-m-d', strtotime('2024-09-4')))
+//                                                                             ->where('status', 'present')
+//                                                                             ->count();
+//                        $item['classes'][$key]['absent_total'] = Attendance::where('class_id', $class['id'])
+//                                                                             ->where('date', date('Y-m-d', strtotime('2024-09-4')))
+//                                                                             ->where('status', 'absent')
+//                                                                             ->count();                                                   
+//                     }
+//                        $item['presents_overall_total'] = collect($item['classes'])
+//                                                          ->reduce(fn($carry, $item) => $carry + $item['present_total'], 0);
+//                        $item['absents_overall_total'] = collect($item['classes'])
+//                                                          ->reduce(fn($carry, $item) => $carry + $item['absent_total'], 0);
+//                        $item['students_overall_total'] = collect($item['classes'])
+//                                                          ->reduce(fn($carry, $item) => $carry + $item['students'], 0); 
+//                        $item['classes'] = count($item['classes']);
+
+//                        return $item;
+//                  });

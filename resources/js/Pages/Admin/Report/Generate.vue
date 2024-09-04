@@ -7,7 +7,7 @@
                <div class="flex flex-col" v-if="generated.length">
                   <span class=" text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
                   <div class="flex space-x-2"> 
-                     <ExportButton route-name="teacher.report.generated" :fields="exportFields('pdf')" color="bg-red-600">PDF</ExportButton>
+                     <ExportButton route-name="admin.report.generate" :fields="exportFields('pdf')" color="bg-red-600">PDF</ExportButton>
                    </div>
                </div> 
             </div>
@@ -15,16 +15,20 @@
                 <table class=" border-collapse w-full overflow-hidden">
                     <thead>
                         <tr class=" text-gray-600 text-sm font-bold border-b border-b-gray-200">  
-                            <td class=" px-3 py-2">Student</td>
-                            <td class=" px-3 py-2">Status</td>
-                            <td class=" px-3 py-2">Attendance date</td> 
+                            <td class=" px-3 py-2">Teacher</td>
+                            <td class=" px-3 py-2">Classes</td>
+                            <td class=" px-3 py-2">Students</td> 
+                            <td class=" px-3 py-2">Presents</td>
+                            <td class=" px-3 py-2">Absents</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-if="generated.length" v-for="generate in generated" class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
-                            <td class=" px-3 py-2 text-sm">{{ generate.student.firstName + ' ' + generate.student.lastName}}</td>
-                            <td class=" px-3 py-2 text-sm">{{ generate.status }}</td>
-                            <td class=" px-3 py-2 text-sm">{{ generate.date}} </td> 
+                            <td class=" px-3 py-2 text-sm">{{ generate.firstName + ' ' + generate.lastName}}</td>
+                            <td class=" px-3 py-2 text-sm">{{ generate.classes.length }}</td>
+                            <td class=" px-3 py-2 text-sm">{{ generate.students_overall_total}} </td> 
+                            <td class=" px-3 py-2 text-sm">{{ generate.presents_overall_total}} </td> 
+                            <td class=" px-3 py-2 text-sm">{{ generate.absents_overall_total}} </td> 
                         </tr>
                         <tr v-else>
                             <td class=" border-b border-gray-200" colspan="6">
@@ -48,8 +52,7 @@ import { debounce } from 'lodash';
 
  
 const props = defineProps({
-    generated: Array, 
-    teacherClass: Object,
+    generated: Array,  
     filters: String,
 })
 
@@ -60,13 +63,12 @@ onMounted(() => {
         search.value = getDateToday();
     }
 })
-
-// const academic_year = ref(props.filters.academic_year);
+ 
 
 watch(search, debounce((newValue) => {
     router
    .get(
-          route('teacher.report.generate', {class: props.teacherClass.id}), 
+          route('admin.report.index'), 
          {
              search: newValue
          }, 
@@ -89,8 +91,7 @@ const getDateToday = () => {
 
 const exportFields = (export_type) => {
      
-     return {
-              class_id: props.teacherClass.id,
+     return { 
               date: search.value,  
               export_type: export_type,
             };

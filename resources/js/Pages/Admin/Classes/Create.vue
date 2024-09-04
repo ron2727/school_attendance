@@ -4,11 +4,11 @@
       <form @submit.prevent="handleSubmit()" class=" space-y-3"> 
         <DropDown>
           <template #trigger>
-            <div class=" flex items-center space-x-2">
+            <div class="flex items-center space-x-2">
               <button type="button" class=" px-3 py-1 bg-indigo-600 text-sm text-white rounded-md">Select
                 Teacher</button>
               <div v-if="selectedTeacherName"
-                   class=" flex items-center space-x-2">
+                   class="flex items-center space-x-2">
                 <span class="text-gray-500 text-sm">{{ selectedTeacherName }}</span>
                 <button
                         @click="removeSelectedTeacher()" 
@@ -17,10 +17,10 @@
                </button>
               </div>
             </div>
-            <small v-if="form.errors.teacher" class=" text-xs text-red-600">{{ form.errors.teacher }}</small>
+            <small v-if="form.errors.user_id" class=" text-xs text-red-600">{{ form.errors.user_id }}</small>
           </template>
           <template #content>
-            <div class="w-full p-3 bg-white rounded-md">
+            <div class="w-max p-3 bg-white rounded-md">
               <InputComponent v-model="search" input-label="Search teacher" input-name="search"
                 input-place-holder="Search teacher..."/>
               <div v-if="teachers?.data.length"

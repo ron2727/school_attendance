@@ -76,4 +76,13 @@ class AttendanceRepository
                         return $carry;
                     }, ['status' => collect([]), 'totals' => collect([])]);
     }
+
+    public function findAttendanceRecordWithStatus($class_id, $date, $status)
+    {
+        return $this->attendance
+                    ->where('class_id', $class_id)
+                    ->where('date', $date)
+                    ->where('status', $status)
+                    ->get();
+    }
 }
