@@ -72,23 +72,17 @@ Route::middleware('auth')->group(function(){
 Route::get('test', function(Request $request){
     
 
-    return  Classes::where('user_id', 2) 
-                   ->where('academic_year', date('Y'))
-                   ->with(['attendance' => function ($query) {
-                         $query->where('status', 'absent')
-                               ->where('date', date('Y-m-d', strtotime('2024-09-03')));
-                    }])->get()
-                    ->map(function($item) { 
-                        return [
-                            'subject' => $item['subject'].'('.$item['grade_section'].')',
-                            'total' => count($item['attendance'])
-                        ];
-                     })->reduce(function($carry, $item){
-                         
-                         $carry['subject']->push($item['subject']);
-                         $carry['total']->push($item['total']);
-                         return $carry;
-                     }, ['subject' => collect([]), 'total' => collect([])]);
+    return  Attendance::query()
+                 ->select(DB::raw('count(*) as total, status'))
+                 ->where('date', date('Y-m-d', strtotime('2024-09-04')))
+                 ->groupBy('status')
+                 ->get()
+                 ->reduce(function($carry, $item){ 
+                     $carry['status']->push(ucfirst($item['status']));
+                     $carry['totals']->push($item['total']);
+
+                     return $carry;
+                 }, ['status' => collect([]), 'totals' => collect([])]);
  
 });
   

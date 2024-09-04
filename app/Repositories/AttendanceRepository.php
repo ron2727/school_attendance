@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Attendance;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceRepository
@@ -65,8 +66,14 @@ class AttendanceRepository
     {
         return $this->attendance
                     ->select(DB::raw('count(*) as total, status'))
-                    ->where('date', date('Y-m-d'))
+                    ->where('date', date('Y-m-d', strtotime(Carbon::now()->timezone('Asia/Manila'))))
                     ->groupBy('status')
-                    ->get();
+                    ->get()
+                    ->reduce(function($carry, $item){ 
+                        $carry['status']->push(ucfirst($item['status']));
+                        $carry['totals']->push($item['total']);
+   
+                        return $carry;
+                    }, ['status' => collect([]), 'totals' => collect([])]);
     }
 }

@@ -31,15 +31,12 @@ const props = defineProps({
     studentTotal: String,
     dateToday: String
 }) 
-
-const labels = ref(null);
-const dataDataSets = ref(null);
-
+ 
 const data = ref({
-    labels: props.chartData.map(item => item.status) ,
+    labels: props.chartData.status,
     datasets: [{
         label: 'Total',
-        data: props.chartData.map(item => item.total), 
+        data: props.chartData.totals, 
         backgroundColor: 'rgb(79 70 229)',
     }],
     
@@ -49,7 +46,7 @@ const options = ref({
         scales: {
             y: {
                 beginAtZero: true, 
-                max: props.chartData.map(item => item.total).reduce((total, item) => item + total)
+                max: props.chartData.totals.length ? props.chartData.totals.reduce((total, item) => item + total) : 0
             }
         },
         plugins: {

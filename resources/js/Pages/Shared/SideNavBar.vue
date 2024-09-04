@@ -28,7 +28,7 @@
             <li class="px-3">
                 <NavLink>
                     <box-icon name='report' type='solid'></box-icon>
-                    <span>Reports</span>
+                    <span>Report</span>
                 </NavLink>
             </li>
         </ul>
