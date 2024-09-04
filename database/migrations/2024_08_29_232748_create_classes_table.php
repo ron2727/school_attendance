@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('time_from');
             $table->time('time_to');
             $table->year('academic_year'); 
+            $table->softDeletes();
         });
     }
 

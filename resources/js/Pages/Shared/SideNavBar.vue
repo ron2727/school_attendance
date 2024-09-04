@@ -27,7 +27,7 @@
             </li>
             <li class="px-3">
                 <NavLink :href="route('admin.report.index')" :active="pageName() === 'Report'">
-                    <box-icon name='report' type='solid'></box-icon>
+                    <box-icon type='solid' name='printer'></box-icon>
                     <span>Report</span>
                 </NavLink>
             </li>
@@ -53,7 +53,7 @@
             </li> 
             <li class="px-3">
                 <NavLink :href="route('teacher.report.index')" :active="pageName() === 'Report'">
-                    <box-icon name='report' type='solid'></box-icon>
+                    <box-icon type='solid' name='printer'></box-icon>
                     <span>Report</span>
                 </NavLink>
             </li>

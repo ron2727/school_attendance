@@ -21,7 +21,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="generated.length" v-for="generate in generated" class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
+                        <tr v-if="generated.length" 
+                            v-for="generate in generated" 
+                            class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
                             <td class=" px-3 py-2 text-sm">{{ generate.student.firstName + ' ' + generate.student.lastName}}</td>
                             <td class=" px-3 py-2 text-sm">{{ generate.status }}</td>
                             <td class=" px-3 py-2 text-sm">{{ generate.date}} </td> 

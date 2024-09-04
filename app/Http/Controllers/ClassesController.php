@@ -98,9 +98,18 @@ class ClassesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Classes $classes)
+    public function destroy(string $id)
     {
-        //
+        $this->classesRepository->trash($id);
+
+        return back()->with('success', 'Class successfully deleted');
+    }
+
+    public function restore(string $id)
+    {
+        $this->classesRepository->restore($id);
+
+        return back()->with('success', 'Class restored');
     }
 
     public function classes(Request $request)

@@ -10,19 +10,25 @@
                 <SelectDateYear v-model="academic_year" label="Academic Year" />
             </div>
             <div class="border border-b-0 border-gray-200 rounded-md mb-5">
-                <table class=" border-collapse w-full overflow-hidden">
+                <table class=" table-auto border-collapse w-full overflow-hidden">
                     <thead>
                         <tr class=" text-gray-600 text-sm font-bold border-b border-b-gray-200">
                             <td class=" px-3 py-2">Subject</td>
                             <td class=" px-3 py-2">Teacher</td>
                             <td class=" px-3 py-2">Grade & Section</td>
                             <td class=" px-3 py-2">Time</td>
-                            <td class=" px-3 py-2">Academic Year</td>
-                            <td class=" px-3 py-2">Actions</td>
+                            <td class=" px-3 py-2">Academic Year</td> 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="classes.data.length" v-for="teacherClass in classes.data" class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
+<!--                         
+                        <Link :href="route('classes.edit', {class: teacherClass.id})" as="a"> -->
+                        <Link
+                            as="tr"
+                            v-if="classes.data.length" 
+                            v-for="teacherClass in classes.data"
+                           :href="route('classes.edit', {class: teacherClass.id})"
+                            class=" text-gray-500 border-b border-b-gray-200 cursor-pointer hover:bg-gray-50 even:hover:bg-gray-100 even:bg-gray-50">
                             <td class=" px-3 py-2 text-sm">{{ teacherClass.subject }}</td>
                             <td class=" px-3 py-2 text-sm">{{ teacherClass.user.firstName + ' ' +
                                 teacherClass.user.lastName}}</td>
@@ -31,15 +37,12 @@
                             </td>
                             <td class=" px-3 py-2 text-sm">{{ teacherClass.academic_year }}</td>
                             <td class=" px-3 py-2 text-sm">
-                                <div>
-                                    <Link :href="route('classes.edit', {class: teacherClass.id})" as="button" type="button">
-                                       <box-icon name='edit-alt' color="green" type='solid' size="sm"></box-icon>
-                                    </Link>
-                                </div>
+                                <box-icon name='chevron-right' color="indigo" type='solid' size="sm"></box-icon>
                             </td>
-                        </tr>
+                        </Link>
+                        <!-- </Link> -->
                         <tr v-else>
-                            <td colspan="6">
+                            <td class="border-b border-b-gray-200" colspan="6">
                                 <NoDataMessage>No result found</NoDataMessage>
                             </td>
                         </tr>

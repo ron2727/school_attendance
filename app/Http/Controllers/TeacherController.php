@@ -77,7 +77,16 @@ class TeacherController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->teacherRepository->trash($id);
+
+        return back()->with('success', 'Teacher successfully deleted');
+    }
+
+    public function restore(string $id)
+    {
+        $this->teacherRepository->restore($id);
+
+        return back()->with('success', 'Teacher restored');
     }
 
     public function teacherClasses(Request $request)

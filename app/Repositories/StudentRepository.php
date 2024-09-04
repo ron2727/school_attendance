@@ -34,7 +34,7 @@ class StudentRepository
 
     public function find($id)
     {
-        return $this->student->find($id);
+        return $this->student->withTrashed()->find($id);
     }
 
     public function update($data, $id)
@@ -50,5 +50,13 @@ class StudentRepository
         return $this->student->count();
     }
 
-     
+    public function trash($id)
+    {
+       $this->student->find($id)->delete();
+    }
+
+    public function restore($id)
+    {
+       $this->student->withTrashed()->find($id)->restore();
+    }
 }

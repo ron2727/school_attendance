@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(100)->create();
+        // User::factory(100)->role('teacher')->create();
 
         // User::factory()
         //     ->has(
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
         // Student::factory(100)->create();
 
-        StudentClasses::factory()->classId(10)->studentId(4)->create();
+        // StudentClasses::factory()->classId(10)->studentId(4)->create();
 
     }
 }

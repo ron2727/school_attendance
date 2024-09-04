@@ -45,12 +45,15 @@ class ClassesRepository
 
     public function show($id)
     {
-        return $this->classes->where('id', $id)->with('user')->get();
+        return $this->classes->withTrashed()->where('id', $id)->with('user')->get();
     }
 
     public function update($data, $id)
     {
-        return $this->classes->find($id)->update($data);
+        return $this->classes
+                    ->withTrashed()
+                    ->find($id)
+                    ->update($data);
     }
 
     public function classes($id, $academic_year)
@@ -104,5 +107,15 @@ class ClassesRepository
                          $carry['totals']->push($item['total']);
                          return $carry;
                      }, ['subjects' => collect([]), 'totals' => collect([])]);
+    }
+
+    public function trash($id)
+    {
+       $this->classes->find($id)->delete();
+    }
+
+    public function restore($id)
+    {
+       $this->classes->withTrashed()->find($id)->restore();
     }
 }

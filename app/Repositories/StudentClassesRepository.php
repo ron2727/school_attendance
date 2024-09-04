@@ -20,6 +20,7 @@ class StudentClassesRepository
                   ->join('students', 'students_classes.student_id', '=', 'students.id')
                   ->select('students.*')
                   ->where('class_id', $class_id)
+                  ->where('deleted_at', null)
                   ->get();
     }
 

@@ -35,13 +35,14 @@ class TeacherRepository
 
     public function find($id)
     {
-        return $this->teacher->find($id);
+        return $this->teacher->withTrashed()->find($id);
     }
     
     public function update($data, $id)
     {
         
         return $this->teacher
+                    ->withTrashed()
                     ->find($id)
                     ->update($data); 
     }
@@ -89,5 +90,15 @@ class TeacherRepository
         return $this->teacher 
                     ->where('role', 'teacher')
                     ->count();
+    }
+
+    public function trash($id)
+    {
+       $this->teacher->find($id)->delete();
+    }
+
+    public function restore($id)
+    {
+       $this->teacher->withTrashed()->find($id)->restore();
     }
 } 

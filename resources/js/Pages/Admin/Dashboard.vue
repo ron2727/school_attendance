@@ -33,7 +33,7 @@ const props = defineProps({
 }) 
  
 const data = ref({
-    labels: props.chartData.status,
+    labels: ['Present', 'Absent'],
     datasets: [{
         label: 'Total',
         data: props.chartData.totals, 

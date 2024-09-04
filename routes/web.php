@@ -16,6 +16,7 @@ use App\Models\Classes;
 use App\Models\Student;
 use App\Models\StudentClasses;
 use App\Models\User;
+use App\Repositories\AttendanceRepository;
 use App\Repositories\StudentClassesRepository;
 use App\Services\GenerateReportServices;
 use Illuminate\Database\Eloquent\Builder;
@@ -62,7 +63,12 @@ Route::middleware('auth')->group(function(){
             'teacher' => TeacherController::class,
             'classes' => ClassesController::class,
             'student' => StudentController::class
-        ]);  
+        ]); 
+        
+        Route::post('teacher/{teacher}/restore', [TeacherController::class, 'restore'])->name('teacher.restore');
+        Route::post('student/{student}/restore', [StudentController::class, 'restore'])->name('student.restore');
+        Route::post('classes/{class}/restore', [ClassesController::class, 'restore'])->name('classes.restore');
+
         Route::get('report', [AdminReportController::class, 'index'])->name('admin.report.index');
         Route::post('report/generate', [AdminReportController::class, 'generate'])->name('admin.report.generate'); 
 
@@ -81,39 +87,10 @@ Route::get('test', function(Request $request, GenerateReportServices $generateRe
  
 });
 
-Route::get('tests', function(Request $request, GenerateReportServices $generateReport){
+Route::get('tests', function(Request $request, StudentClassesRepository $studentClassesRepository){
     
 
-    return  User::where('role', 'teacher')->
-                 with(['classes' => function($query){
-                     $query->where('academic_year', date('Y'));
-                 }])->
-                 whereHas('classes', function($query){
-                    $query->where('academic_year', date('Y'));
-                 })->get()
-                 ->map(function($item){
-                       
-                    foreach ($item['classes'] as $key => $class) {
-                       $item['classes'][$key]['students'] = StudentClasses::where('class_id', $class['id'])->count();
-                       $item['classes'][$key]['present_total'] = Attendance::where('class_id', $class['id'])
-                                                                            ->where('date', date('Y-m-d', strtotime('2024-09-03')))
-                                                                            ->where('status', 'present')
-                                                                            ->count();
-                       $item['classes'][$key]['absent_total'] = Attendance::where('class_id', $class['id'])
-                                                                            ->where('date', date('Y-m-d', strtotime('2024-09-03')))
-                                                                            ->where('status', 'absent')
-                                                                            ->count();                                                   
-                    }
-                       $item['presents_overall_total'] = collect($item['classes'])
-                                                         ->reduce(fn($carry, $item) => $carry + $item['present_total'], 0);
-                       $item['absents_overall_total'] = collect($item['classes'])
-                                                         ->reduce(fn($carry, $item) => $carry + $item['absent_total'], 0);
-                       $item['students_overall_total'] = collect($item['classes'])
-                                                         ->reduce(fn($carry, $item) => $carry + $item['students'], 0); 
-                       $item['classes'] = count($item['classes']);
-
-                       return $item;
-                 });
+    return  $studentClassesRepository->studentsOfClass(1);
  
 });
   

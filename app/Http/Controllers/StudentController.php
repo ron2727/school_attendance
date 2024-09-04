@@ -72,8 +72,17 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(string $id)
     {
-        //
+        $this->studentRepository->trash($id);
+
+        return back()->with('success', 'Student successfully deleted');
+    }
+
+    public function restore(string $id)
+    {
+        $this->studentRepository->restore($id);
+
+        return back()->with('success', 'Student restored');
     }
 }

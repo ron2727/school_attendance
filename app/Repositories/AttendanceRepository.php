@@ -55,10 +55,13 @@ class AttendanceRepository
 
     public function findAttendanceRecord($class_id, $date)
     {
-        return $this->attendance
+        return $this->attendance 
                     ->where('class_id', $class_id)
                     ->where('date', $date)
-                    ->with('student')
+                    ->with('student') 
+                    ->whereHas('student', function($query){
+                        $query->where('deleted_at', NULL);
+                     })
                     ->get();
     }
 

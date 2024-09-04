@@ -44,5 +44,12 @@ class UserFactory extends Factory
         ]);
     }
 
+    public function role($value): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => $value,
+        ]);
+    }
+
 
 }
