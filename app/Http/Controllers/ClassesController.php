@@ -33,7 +33,8 @@ class ClassesController extends Controller
                                                 'classes' => $classes,
                                                 'filters' => [
                                                     'search' => $request->input('search'),
-                                                    'academic_year' =>  $academic_year
+                                                    'academic_year' =>  $academic_year,
+                                                    'trashed' => $request->input('trashed')
                                                 ]
                                               ]);
     }

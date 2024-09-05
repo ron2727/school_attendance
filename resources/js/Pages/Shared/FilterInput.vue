@@ -8,10 +8,10 @@
                  </button>
             </template>
             <template #content>
-                <div class="w-max">
+                <div class="w-max"> 
                     <select v-model="modelValue" @change="$emit('update:modelValue', $event.target.value)" name="trashed" id="trashed"
                         class=" w-full text-sm text-gray-500 px-2 py-1.5 border border-gray-300 rounded">
-                        <option value="" selected></option>
+                        <option value=""></option>
                         <option value="with">With Trashed</option>
                         <option value="only">Only Trashed</option>
                     </select>
