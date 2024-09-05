@@ -1,7 +1,7 @@
 <template>
     <MainContainer page-title="Dashboard">
-        <div class=" max-w-2xl grid grid-cols-3 gap-x-7">  
-           <Card label="CLASS" :total="classesTotal" icon="book" solid="true"/>
+        <div class=" max-w-2xl grid grid-cols-2 md:grid-cols-3 gap-x-7">  
+           <Card label="CLASS" :total="classesTotal" icon="book" :solid="true"/>
            <Card label="STUDENT" :total="studentTotal" icon="user"/>  
         </div>
         <div class="mt-5 p-5 bg-white rounded-lg">
@@ -24,9 +24,9 @@ import Chart from '../Shared/Dashboard/Chart.vue';
 import { ref } from 'vue';
 
 const props = defineProps({
-    chartData: Array, 
-    classesTotal: String, 
-    studentTotal: String,
+    chartData: Object, 
+    classesTotal: Number, 
+    studentTotal: Number,
     dateToday: String
 }) 
  

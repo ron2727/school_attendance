@@ -9,7 +9,7 @@
             <FilterInput v-model="trashed"/>
          </div>
          
-         <div class=" grid grid-cols-4 gap-5 mb-5" v-if="students.data.length">
+         <div class=" grid grid-cols-2 md:grid-cols-4 gap-5 mb-5" v-if="students.data.length">
             <Link v-for="student in students.data" :key="student.id" :href="route('student.edit', { student: student.id })" as="button" type="button" class=" text-xs text-green-600">
             <Card>
                <template #head>
@@ -21,7 +21,7 @@
                   </div>
                </template>
                <template #body>
-                  <h6 class=" text-sm py-3 text-gray-500 font-bold text-center">{{ student.firstName + ' ' + student.lastName}}</h6>
+                  <h6 class=" text-xs md:text-sm py-3 text-gray-500 font-bold text-center">{{ student.firstName + ' ' + student.lastName}}</h6>
                </template>
             </Card>
             </Link>

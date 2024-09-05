@@ -11,7 +11,7 @@
             {{ dateToday }}
         </div> 
           <div v-if="studentsClass.length" 
-               class=" grid grid-cols-4 gap-5 my-5">
+               class=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-5">
             <div  v-for="student in studentsClass">
                 <div class=" p-2 border border-gray-200 border-l-4 border-l-indigo-600 rounded-md text-sm text-gray-500">
                    <span class=" block">{{ student.firstName + ' ' + student.lastName}}</span>
@@ -24,7 +24,7 @@
                    </div>
                 </div> 
             </div>
-             <div class="col-span-4 flex justify-end">
+             <div class=" col-span-2 md:col-span-3 lg:col-span-4 flex justify-end">
                 <button v-if="!isClassHasAttendance" 
                        @click="handleSubmit()" 
                        :disabled="form.processing" 

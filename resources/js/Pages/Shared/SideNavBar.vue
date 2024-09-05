@@ -1,6 +1,11 @@
 <template>
-    <div class=" main-menu w-64 h-full pt-20 bg-white">
-        <ul class=" text-gray-500 space-y-4" v-if="$page.props.auth.user.role === 'admin'">
+    <div @click="toggle()" 
+         id="overlay" 
+         :class="[isToggled ? 'block' : 'hidden']"
+         class=" block md:hidden fixed top-0 left-0 z-0 w-screen h-screen overflow-hidden bg-black/10"></div>
+    <div :class="[isToggled ? 'block' : 'hidden']" 
+         class=" main-menu md:block absolute md:static z-[99999] md:z-0 w-64 h-max md:h-full pt-3 md:pt-20 pb-3 md:pb-0 border md:border-none rounded-lg md:rounded-none bg-white">
+        <ul @click="toggle()" class=" text-gray-500 space-y-4" v-if="$page.props.auth.user.role === 'admin'">
             <li class="px-3">
                 <NavLink :href="route('dashboard')" :active="pageName() === 'Dashboard'">
                     <box-icon type='solid' name='dashboard'></box-icon>
@@ -32,7 +37,7 @@
                 </NavLink>
             </li>
         </ul>
-        <ul class=" text-gray-500 space-y-4" v-else>
+        <ul @click="toggle()" class=" text-gray-500 space-y-4" v-else>
             <li class="px-3">
                 <NavLink :href="route('teacher.dashboard')" :active="pageName() === 'Dashboard'">
                     <box-icon type='solid' name='dashboard'></box-icon>
@@ -64,10 +69,12 @@
 <script setup>
 import NavLink from './NavLink.vue';
 import { usePage } from '@inertiajs/vue3';
+import { inject } from 'vue';
 
 const page = usePage();
 
-const pageName = () => page.component.split('/')[1] 
+const pageName = () => page.component.split('/')[1];
 
+const {isToggled, toggle} = inject('toggle');
 </script>
  

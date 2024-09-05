@@ -1,11 +1,11 @@
 <template>
     <div class="wrapper-pagination">
-       <ul class=" space-x-3">
+       <ul class=" space-x-3 space-y-4">
           <li 
               v-for="(link, index) in links"
               class="inline-block"> 
              <Link 
-                  :href="link.url" 
+                  :href="link.url ?? ''" 
                   :class="{'bg-indigo-600 text-white': link.active}"
                   class=" px-3 py-2 text-sm border rounded-lg">{{ link.label }}</Link>
           </li>

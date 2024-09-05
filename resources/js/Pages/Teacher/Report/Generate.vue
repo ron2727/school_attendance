@@ -3,9 +3,8 @@
         <div class=" max-w-xl bg-white p-5 rounded"> 
             <div class="flex justify-between">
                <InputComponent v-model="search" input-label="Date" input-name="date" input-type="date"/>
-
                <div class="flex flex-col" v-if="generated.length">
-                  <span class=" text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
+                  <span class=" text-xs md:text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
                   <div class="flex space-x-2"> 
                      <ExportButton route-name="teacher.report.generated" :fields="exportFields('pdf')" color="bg-red-600">PDF</ExportButton>
                    </div>
@@ -14,7 +13,7 @@
             <div class="border border-b-0 border-gray-200 rounded-md my-5">
                 <table class=" border-collapse w-full overflow-hidden">
                     <thead>
-                        <tr class=" text-gray-600 text-sm font-bold border-b border-b-gray-200">  
+                        <tr class=" text-gray-600 text-xs md:text-sm font-bold border-b border-b-gray-200">  
                             <td class=" px-3 py-2">Student</td>
                             <td class=" px-3 py-2">Status</td>
                             <td class=" px-3 py-2">Attendance date</td> 
@@ -24,9 +23,9 @@
                         <tr v-if="generated.length" 
                             v-for="generate in generated" 
                             class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
-                            <td class=" px-3 py-2 text-sm">{{ generate.student.firstName + ' ' + generate.student.lastName}}</td>
-                            <td class=" px-3 py-2 text-sm">{{ generate.status }}</td>
-                            <td class=" px-3 py-2 text-sm">{{ generate.date}} </td> 
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.student.firstName + ' ' + generate.student.lastName}}</td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.status }}</td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.date}} </td> 
                         </tr>
                         <tr v-else>
                             <td class=" border-b border-gray-200" colspan="6">

@@ -5,7 +5,7 @@
                :name="name" 
                :value="value" 
                 type="hidden" >  
-        <button type="submit" :class="color" class="px-3 py-1 text-white text-sm rounded">
+        <button type="submit" :class="color" class="px-3 py-1 text-white text-xs md:text-sm rounded">
             <slot/>
         </button>
     </form>

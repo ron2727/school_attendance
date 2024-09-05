@@ -1,13 +1,13 @@
 <template>
     <div class="wrapper-input space-y-1">
-        <label :for="inputName" class=" text-gray-600 text-sm font-bold">{{inputLabel}}</label>
+        <label :for="inputName" class=" text-gray-600 text-xs md:text-sm font-bold">{{inputLabel}}</label>
         <input 
                :type="inputType" 
                :placeholder="inputPlaceHolder"
                :value="modelValue"
                @input="$emit('update:modelValue', $event.target.value)"
                :class="{'focus:outline-indigo-500': !inputError, 'border-red-300 focus:outline-red-500': inputError}"
-               class=" w-full text-sm text-gray-500 px-2 py-1.5 border border-gray-300 rounded" />
+               class=" w-full text-xs md:text-sm text-gray-500 px-2 py-1.5 border border-gray-300 rounded" />
         <small 
               v-if="inputError"
               class=" text-xs text-red-600">{{inputError}}</small>

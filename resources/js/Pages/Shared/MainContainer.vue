@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class=" text-4xl font-bold text-indigo-600 mb-5">{{pageTitle}}</h1>
+        <h1 class=" text-3xl md:text-4xl font-bold text-indigo-600 mb-5">{{pageTitle}}</h1>
         <AlertMessage 
                         v-if="$page.props.flash.success || $page.props.flash.error" 
                         :flash="$page.props.flash"

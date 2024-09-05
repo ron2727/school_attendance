@@ -1,11 +1,11 @@
 <template>
     <div class="wrapper-input space-y-1">
-        <label :for="name" class=" text-gray-600 text-sm font-bold">{{label}}</label>
+        <label :for="name" class=" text-gray-600 text-xs md:text-sm font-bold">{{label}}</label>
         <select
                :value="modelValue"
                @change="$emit('update:modelValue', $event.target.value)" 
-               class=" relative bottom-0 w-full text-sm text-gray-500 focus:outline-indigo-500 px-2 py-1.5 border border-gray-300 rounded">
-           <option :value="new Date().getFullYear()" selected>{{ new Date().getFullYear() }}</option>
+               class=" relative bottom-0 w-full text-xs md:text-sm text-gray-500 focus:outline-indigo-500 px-2 py-1.5 border border-gray-300 rounded">
+           <option :value="getCurrentYear()" selected>{{ getCurrentYear() }}</option>
            <option v-for="year in years()" :value="year">{{ year }}</option>
         </select> 
     </div>
@@ -32,6 +32,10 @@ const years = () => {
     return years;
 }
 
-
+const getCurrentYear = () => {
+    const currentYear = new Date().getFullYear();
+    
+    return currentYear.toString()
+}
 </script>
  

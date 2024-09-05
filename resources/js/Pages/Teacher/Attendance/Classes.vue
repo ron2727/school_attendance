@@ -1,7 +1,7 @@
 <template>
     <MainContainer page-title="Mark Attendance">
        <div class="bg-white p-5 rounded">  
-          <div class=" grid grid-cols-4 gap-5 mb-5" v-if="classes.length">
+          <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-5" v-if="classes.length">
             <Link  v-for="teacherClass in classes" 
                    :key="teacherClass.id" 
                    :href="route('teacher.attendance.students', {class: teacherClass.id})">

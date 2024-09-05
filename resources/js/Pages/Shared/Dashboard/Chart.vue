@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h6 class=" text-2xl text-gray-500 font-bold">{{ title }}</h6>
+        <h6 class=" text-lg md:text-2xl text-gray-500 font-bold">{{ title }}</h6>
         <canvas id="myChart"></canvas>
     </div>
 </template>

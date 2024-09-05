@@ -4,17 +4,18 @@
             <ButtonAdd :href="route('classes.create')">
                 Add new class
             </ButtonAdd>
-            <div class="wrapper-search w-64 mt-5 mb-4 space-y-3">
+            <div class="wrapper-search w-52 md:w-64 mt-5 mb-4 space-y-3">
                 <div class=" flex items-end space-x-1">
                     <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search class..." />
                     <FilterInput v-model="trashed"/>
                 </div> 
                 <SelectDateYear v-model="academic_year" label="Academic Year" />
             </div>
-            <div class="border border-b-0 border-gray-200 rounded-md mb-5">
-                <table class=" table-auto border-collapse w-full overflow-hidden">
+            <div class="w-full mb-5 overflow-x-auto"> 
+              <div class="w-max md:w-full border border-b-0 border-gray-200 rounded-md">
+                <table class=" table-auto border-collapse w-max md:w-full overflow-hidden">
                     <thead>
-                        <tr class=" text-gray-600 text-sm font-bold border-b border-b-gray-200">
+                        <tr class=" text-gray-600 text-xs md:text-sm font-bold border-b border-b-gray-200">
                             <td class=" px-3 py-2">Subject</td>
                             <td class=" px-3 py-2">Teacher</td>
                             <td class=" px-3 py-2">Grade & Section</td>
@@ -27,16 +28,16 @@
                             as="tr"
                             v-if="classes.data.length" 
                             v-for="teacherClass in classes.data"
-                           :href="route('classes.edit', {class: teacherClass.id})"
+                            :href="route('classes.edit', {class: teacherClass.id})"
                             class=" text-gray-500 border-b border-b-gray-200 cursor-pointer hover:bg-gray-50 even:hover:bg-gray-100 even:bg-gray-50">
-                            <td class=" px-3 py-2 text-sm">{{ teacherClass.subject }}  <box-icon v-if="teacherClass.deleted_at" type='solid' name='trash-alt' color="gray" size="xs"></box-icon></td>
-                            <td class=" px-3 py-2 text-sm">{{ teacherClass.user.firstName + ' ' +
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ teacherClass.subject }}  <box-icon v-if="teacherClass.deleted_at" type='solid' name='trash-alt' color="gray" size="xs"></box-icon></td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ teacherClass.user.firstName + ' ' +
                                 teacherClass.user.lastName}}</td>
-                            <td class=" px-3 py-2 text-sm">{{ teacherClass.grade_section }}</td>
-                            <td class=" px-3 py-2 text-sm">{{ teacherClass.time_from + ' - ' + teacherClass.time_to }}
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ teacherClass.grade_section }}</td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ teacherClass.time_from + ' - ' + teacherClass.time_to }}
                             </td>
-                            <td class=" px-3 py-2 text-sm">{{ teacherClass.academic_year }}</td>
-                            <td class=" px-3 py-2 text-sm">
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ teacherClass.academic_year }}</td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">
                                 <box-icon name='chevron-right' color="indigo" type='solid' size="sm"></box-icon>
                             </td>
                         </Link> 
@@ -47,6 +48,7 @@
                         </tr>
                     </tbody>
                 </table>
+              </div>
             </div>
             <Pagination v-if="classes.data.length" :links="classes.links" />
         </div>

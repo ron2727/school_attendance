@@ -4,7 +4,13 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     plugins: [
-        vue(),
+        vue({
+            template: {
+              compilerOptions: {
+                isCustomElement: (tag) => ['box-icon'].includes(tag),
+              }
+            }
+          }),
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,

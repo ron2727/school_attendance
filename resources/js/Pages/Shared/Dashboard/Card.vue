@@ -17,7 +17,7 @@
 <script setup>
 defineProps({
     label: String,
-    total: String,
+    total: Number,
     icon: String,
     solid: {
         type: Boolean,

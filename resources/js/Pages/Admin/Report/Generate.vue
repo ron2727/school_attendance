@@ -5,16 +5,17 @@
                <InputComponent v-model="search" input-label="Date" input-name="date" input-type="date"/>
 
                <div class="flex flex-col" v-if="generated.length">
-                  <span class=" text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
+                  <span class=" text-xs md:text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
                   <div class="flex space-x-2"> 
                      <ExportButton route-name="admin.report.generate" :fields="exportFields('pdf')" color="bg-red-600">PDF</ExportButton>
                    </div>
                </div> 
             </div>
-            <div class="border border-b-0 border-gray-200 rounded-md my-5">
-                <table class=" border-collapse w-full overflow-hidden">
+            <div class="w-full mb-5 overflow-x-auto"> 
+              <div class="w-max md:w-full border border-b-0 border-gray-200 rounded-md my-5">
+                 <table class=" border-collapse w-max md:w-full overflow-hidden">
                     <thead>
-                        <tr class=" text-gray-600 text-sm font-bold border-b border-b-gray-200">  
+                        <tr class=" text-gray-600 text-xs md:text-sm font-bold border-b border-b-gray-200">  
                             <td class=" px-3 py-2">Teacher</td>
                             <td class=" px-3 py-2">Classes</td>
                             <td class=" px-3 py-2">Students</td> 
@@ -24,11 +25,11 @@
                     </thead>
                     <tbody>
                         <tr v-if="generated.length" v-for="generate in generated" class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
-                            <td class=" px-3 py-2 text-sm">{{ generate.firstName + ' ' + generate.lastName}}</td>
-                            <td class=" px-3 py-2 text-sm">{{ generate.classes.length }}</td>
-                            <td class=" px-3 py-2 text-sm">{{ generate.students_overall_total}} </td> 
-                            <td class=" px-3 py-2 text-sm">{{ generate.presents_overall_total}} </td> 
-                            <td class=" px-3 py-2 text-sm">{{ generate.absents_overall_total}} </td> 
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.firstName + ' ' + generate.lastName}}</td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.classes.length }}</td>
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.students_overall_total}} </td> 
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.presents_overall_total}} </td> 
+                            <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.absents_overall_total}} </td> 
                         </tr>
                         <tr v-else>
                             <td class=" border-b border-gray-200" colspan="6">
@@ -36,8 +37,9 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
-            </div> 
+                 </table>
+               </div> 
+            </div>  
         </div>
     </MainContainer>
 </template>

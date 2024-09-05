@@ -8,7 +8,7 @@
             <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search student..." />
             <FilterInput v-model="trashed"/>
          </div>
-         <div class=" grid grid-cols-4 gap-5 mb-5" v-if="teachers.data.length">
+         <div class=" grid grid-cols-2 md:grid-cols-4 gap-5 mb-5" v-if="teachers.data.length">
             <Link v-for="teacher in teachers.data" :key="teacher.id" :href="route('teacher.edit', { teacher: teacher.id })" as="button" type="button" class=" text-xs text-green-600">
             <Card>
                <template #head>
@@ -20,7 +20,7 @@
                   </div>
                </template>
                <template #body>
-                  <h6 class=" text-sm py-3 text-gray-500 font-bold text-center">{{ teacher.firstName + ' ' + teacher.lastName}}</h6>
+                  <h6 class=" text-xs md:text-sm py-3 text-gray-500 font-bold text-center">{{ teacher.firstName + ' ' + teacher.lastName}}</h6>
                </template>
             </Card>
             </Link>
