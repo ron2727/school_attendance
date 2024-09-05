@@ -16,16 +16,24 @@ class TeacherRepository
         $this->teacher = $user;
     }
 
-    public function index($search)
+    public function index($search, $trashed = '')
     {
         return $this->teacher 
+                    ->when($trashed, function(Builder $query, $value){
+                        if ($value === 'with') {
+                            $query->withTrashed(); 
+                        }
+                        if ($value === 'only') {
+                            $query->onlyTrashed(); 
+                        }
+                    })
                     ->when($search, function(Builder $query, $value){
                        $query->where('firstName', 'LIKE', '%'. $value .'%');  
-                   }) 
-                   ->where('role', 'teacher')
-                   ->orderByDesc('id')
-                   ->paginate(12)
-                   ->withQueryString();
+                    }) 
+                    ->where('role', 'teacher')
+                    ->orderByDesc('id')
+                    ->paginate(12)
+                    ->withQueryString();
     }
 
     public function store($data)

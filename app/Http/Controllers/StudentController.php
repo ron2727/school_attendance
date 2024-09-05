@@ -16,9 +16,12 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $students = $this->studentRepository->index($request->input('search'));
+        $students = $this->studentRepository->index($request->input('search'), $request->input('trashed'));
 
-        return inertia('Admin/Student/Index', ['students' => $students, 'filters' => $request->input('search')]);
+        return inertia('Admin/Student/Index', ['students' => $students, 'filters' => [
+                                                                             'search' => $request->input('search'),
+                                                                              'trashed' => $request->input('trashed'),
+                                                                         ]]);
     }
 
     /**

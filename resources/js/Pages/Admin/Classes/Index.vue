@@ -5,8 +5,10 @@
                 Add new class
             </ButtonAdd>
             <div class="wrapper-search w-64 mt-5 mb-4 space-y-3">
-                <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search class..." />
-
+                <div class=" flex items-end space-x-1">
+                    <InputComponent v-model="search" input-label="Search" input-name="search" input-place-holder="Search class..." />
+                    <FilterInput v-model="trashed"/>
+                </div> 
                 <SelectDateYear v-model="academic_year" label="Academic Year" />
             </div>
             <div class="border border-b-0 border-gray-200 rounded-md mb-5">
@@ -20,16 +22,14 @@
                             <td class=" px-3 py-2">Academic Year</td> 
                         </tr>
                     </thead>
-                    <tbody>
-<!--                         
-                        <Link :href="route('classes.edit', {class: teacherClass.id})" as="a"> -->
+                    <tbody> 
                         <Link
                             as="tr"
                             v-if="classes.data.length" 
                             v-for="teacherClass in classes.data"
                            :href="route('classes.edit', {class: teacherClass.id})"
                             class=" text-gray-500 border-b border-b-gray-200 cursor-pointer hover:bg-gray-50 even:hover:bg-gray-100 even:bg-gray-50">
-                            <td class=" px-3 py-2 text-sm">{{ teacherClass.subject }}</td>
+                            <td class=" px-3 py-2 text-sm">{{ teacherClass.subject }}  <box-icon v-if="teacherClass.deleted_at" type='solid' name='trash-alt' color="gray" size="xs"></box-icon></td>
                             <td class=" px-3 py-2 text-sm">{{ teacherClass.user.firstName + ' ' +
                                 teacherClass.user.lastName}}</td>
                             <td class=" px-3 py-2 text-sm">{{ teacherClass.grade_section }}</td>
@@ -39,8 +39,7 @@
                             <td class=" px-3 py-2 text-sm">
                                 <box-icon name='chevron-right' color="indigo" type='solid' size="sm"></box-icon>
                             </td>
-                        </Link>
-                        <!-- </Link> -->
+                        </Link> 
                         <tr v-else>
                             <td class="border-b border-b-gray-200" colspan="6">
                                 <NoDataMessage>No result found</NoDataMessage>
@@ -58,13 +57,12 @@
 import InputComponent from '../../Shared/InputComponent.vue';
 import Pagination from '../../Shared/Pagination.vue';
 import NoDataMessage from '../../Shared/NoDataMessage.vue';
-import Card from '../../Shared/Card.vue';
+import FilterInput from '../../Shared/FilterInput.vue';
 import ButtonAdd from '../../Shared/ButtonAdd.vue';
 import SelectDateYear from '../../Shared/SelectDateYear.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue'  
-import { debounce } from 'lodash';
-import { forEach } from 'lodash';
+import { debounce } from 'lodash'; 
 
  
 const props = defineProps({
@@ -73,34 +71,37 @@ const props = defineProps({
 })
 
 const search = ref(props.filters.search);
+const trashed = ref(props.filters.trashed);
 const academic_year = ref(props.filters.academic_year);
 
 watch(search, debounce((newValue) => {
-   submitFilter(newValue, academic_year.value)
+    filter({
+        search: newValue, 
+        trashed: trashed.value, 
+        academic_year: academic_year.value
+    })
 }, 500));
-
+watch(trashed, debounce((newValue) => {
+    filter({
+        search: search.value, 
+        trashed: newValue, 
+        academic_year: academic_year.value
+    })
+}, 500));
 watch(academic_year, debounce((newValue) => {
-    submitFilter(search.value, newValue)
+    filter({
+        search: search.value, 
+        trashed: trashed.value, 
+        academic_year: newValue
+    })
 }, 500));
 
-const submitFilter = (searchVal, academicYearVal) => {
-    router
-   .get(
-         route('classes.index'), 
-         {
-             search: searchVal,
-             academic_year: academicYearVal
-         }, 
+const filter = (filter) => {
+   router.get(route('classes.index'), filter, 
          {
             preserveScroll: true,
             preserveState: true
          })
-}
-
-const getClasses = (classes) => {
-      const classSubject = classes.map(schoolClass => schoolClass.subject)
-      const uniqueClasses = [...new Set(classSubject)].join(', ')
-      return uniqueClasses;
 }
 </script>
 

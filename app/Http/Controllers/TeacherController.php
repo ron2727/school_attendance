@@ -17,9 +17,12 @@ class TeacherController extends Controller
      */
     public function index(Request $request)
     {
-        $teachers = $this->teacherRepository->index($request->input('search'));
+        $teachers = $this->teacherRepository->index($request->input('search'), $request->input('trashed'));
 
-        return inertia('Admin/Teachers/Index', ['teachers' => $teachers, 'filters' => $request->input('search')]);
+        return inertia('Admin/Teachers/Index', ['teachers' => $teachers, 'filters' => [
+                                                                              'search' => $request->input('search'),
+                                                                              'trashed' => $request->input('trashed'),
+                                                                          ]]);
     }
 
     /**

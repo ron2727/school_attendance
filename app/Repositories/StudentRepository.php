@@ -14,14 +14,22 @@ class StudentRepository
         $this->student = $student;
     }
 
-    public function index($search)
+    public function index($search, $trashed = '')
     {
         return $this->student 
+                    ->when($trashed, function(Builder $query, $value){
+                        if ($value === 'with') {
+                            $query->withTrashed(); 
+                        }
+                        if ($value === 'only') {
+                            $query->onlyTrashed(); 
+                        }
+                    }) 
                     ->when($search, function(Builder $query, $value){
                        $query->where('firstName', 'LIKE', '%'. $value .'%')
                              ->orWhere('lastName', 'LIKE', '%'. $value .'%')
                              ->orWhere('gender', 'LIKE', '%'. $value .'%');  
-                   })  
+                    })  
                    ->orderByDesc('id')
                    ->paginate(12)
                    ->withQueryString();

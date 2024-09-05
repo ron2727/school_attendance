@@ -27,7 +27,7 @@ class ClassesController extends Controller
             $academic_year = date('Y');
         }
 
-        $classes = $this->classesRepository->index($request->input('search'), $academic_year);
+        $classes = $this->classesRepository->index($request->input('search'), $academic_year, $request->input('trashed'));
 
         return inertia('Admin/Classes/Index', [
                                                 'classes' => $classes,

@@ -15,9 +15,17 @@ class ClassesRepository
         private StudentClassesRepository $studentClassesRepository
     ){}
 
-    public function index($search , $academic_year)
+    public function index($search , $academic_year, $trashed)
     {
         return $this->classes
+                    ->when($trashed, function(Builder $query, $value){
+                        if ($value === 'with') {
+                            $query->withTrashed(); 
+                        }
+                        if ($value === 'only') {
+                            $query->onlyTrashed(); 
+                        }
+                    })
                     ->when($search, function(Builder $query, $value){
                            $query->where('Subject', 'LIKE', '%'. $value .'%'); 
                      })
