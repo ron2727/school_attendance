@@ -27,7 +27,7 @@
             </Link>
          </div>
          <NoDataMessage v-else>No result found</NoDataMessage>
-         <Pagination v-if="students.data.length" :links="students.links" />
+         <Pagination v-if="students.data.length" :pagination="students" />
       </div>
    </MainContainer>
 </template>

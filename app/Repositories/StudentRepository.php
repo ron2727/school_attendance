@@ -67,4 +67,17 @@ class StudentRepository
     {
        $this->student->withTrashed()->find($id)->restore();
     }
+
+    public function randomOrder($search)
+    {
+        return $this->student  
+                    ->when($search, function(Builder $query, $value){
+                       $query->where('firstName', 'LIKE', '%'. $value .'%')
+                             ->orWhere('lastName', 'LIKE', '%'. $value .'%')
+                             ->orWhere('gender', 'LIKE', '%'. $value .'%'); ;  
+                    })  
+                    ->inRandomOrder()
+                    ->take(8)
+                    ->get();
+    }
 }

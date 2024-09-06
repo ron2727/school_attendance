@@ -109,4 +109,16 @@ class TeacherRepository
     {
        $this->teacher->withTrashed()->find($id)->restore();
     }
+
+    public function randomOrder($search)
+    {
+        return $this->teacher  
+                    ->when($search, function(Builder $query, $value){
+                       $query->where('firstName', 'LIKE', '%'. $value .'%');  
+                    }) 
+                    ->where('role', 'teacher')
+                    ->inRandomOrder()
+                    ->take(8)
+                    ->get();
+    }
 } 

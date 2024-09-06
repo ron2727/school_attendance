@@ -21,8 +21,8 @@
             <div class=" w-72 h-80 p-3 bg-white rounded-md overflow-y-auto">
               <InputComponent v-model="search" input-label="Search teacher" input-name="search"
                 input-place-holder="Search student..."/>
-              <div v-if="students?.data.length"
-                   v-for="student in students.data"
+              <div v-if="students.length"
+                   v-for="student in students"
                    class=" mt-2 bg-white border-t rounded-md">
                 <div class=" flex justify-between border-b p-2">
                   <div class=" flex flex-col">
@@ -63,7 +63,7 @@ import { filter } from 'lodash';
  const props = defineProps({
      teacherClass: Object,
      studentsClass: Array,
-     students: Object, 
+     students: Array, 
      filters: String
  }) 
 

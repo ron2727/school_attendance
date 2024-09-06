@@ -44,7 +44,7 @@ class ClassesController extends Controller
      */
     public function create(Request $request)
     { 
-        $teachers = $this->teacherRepository->index($request->input('search'));
+        $teachers = $this->teacherRepository->randomOrder($request->input('search'));
 
         return inertia('Admin/Classes/Create', ['teachers' => $teachers, 'filters' => $request->input('search')]);
     }
@@ -127,7 +127,7 @@ class ClassesController extends Controller
 
     public function classStudents(Request $request, string $class_id)
     {  
-        $students = $this->studentRepository->index($request->input('search'));
+        $students = $this->studentRepository->randomOrder($request->input('search'));
         $teacherClass = $this->classesRepository->find($class_id);
         $studentsOfClasses = $this->studentClassesRepository->studentsOfClass($class_id);
 

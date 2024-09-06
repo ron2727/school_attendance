@@ -18,6 +18,7 @@ use App\Models\StudentClasses;
 use App\Models\User;
 use App\Repositories\AttendanceRepository;
 use App\Repositories\StudentClassesRepository;
+use App\Repositories\TeacherRepository;
 use App\Services\GenerateReportServices;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -87,10 +88,10 @@ Route::get('test', function(Request $request, GenerateReportServices $generateRe
  
 });
 
-Route::get('tests', function(Request $request, StudentClassesRepository $studentClassesRepository){
+Route::get('tests', function(Request $request, TeacherRepository $teacherRepository){
     
 
-    return  $studentClassesRepository->studentsOfClass(1);
+    return  $teacherRepository->randomOrder(null);
  
 });
   

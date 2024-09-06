@@ -23,8 +23,9 @@
             <div class="w-max p-3 bg-white rounded-md">
               <InputComponent v-model="search" input-label="Search teacher" input-name="search"
                 input-place-holder="Search teacher..."/>
-              <div v-if="teachers?.data.length"
-                   v-for="teacher in teachers.data"
+              <div v-if="teachers.length"
+                   v-for="teacher in teachers"
+                   :key="teacher.id"
                    class=" mt-2 bg-white border-t rounded-md">
                 <div class=" flex justify-between border-b p-2">
                   <span class=" text-gray-500 text-sm">{{teacher.firstName + ' ' + teacher.lastName}}</span>
@@ -62,7 +63,7 @@ import { ref, watch } from 'vue';
 import { debounce } from 'lodash';
 
 const props = defineProps({
-  teachers: Object,
+  teachers: Array,
   filters: String
 })
 

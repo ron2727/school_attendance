@@ -50,7 +50,7 @@
                 </table>
               </div>
             </div>
-            <Pagination v-if="classes.data.length" :links="classes.links" />
+            <Pagination v-if="classes.data.length" :pagination="classes" />
         </div>
     </MainContainer>
 </template>
