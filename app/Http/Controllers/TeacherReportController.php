@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\AttendanceRepository;
 use App\Repositories\ClassesRepository;
+use App\Services\ExportExcel;
 use App\Services\ExportPdf;
 use App\Services\GenerateReportServices;
 use Illuminate\Http\Request;
@@ -44,8 +45,14 @@ class TeacherReportController extends Controller
 
         if ($request->input('export_type') === 'pdf') {
             $export_type = new ExportPdf();
+            $path = 'report.template.pdf.DailyAttendanceReport';
         }
-    
-        return $this->generateReportServices->attendanceDailyReport($filters, $export_type);
+
+        if ($request->input('export_type') === 'excel') {
+            $export_type = new ExportExcel();
+            $path = 'report.template.excel.DailyAttendanceRecord';
+        }
+
+        return $this->generateReportServices->attendanceDailyReport($filters, $export_type, $path);
     }
 }

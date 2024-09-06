@@ -6,10 +6,6 @@ use Spatie\LaravelPdf\Facades\Pdf;
 
 class ExportPdf implements ExportFileInferface
 {
-    public function __construct()
-    {
-        //
-    }
 
     public function export($path, $data)
     {

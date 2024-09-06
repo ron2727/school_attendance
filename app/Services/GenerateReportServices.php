@@ -16,16 +16,16 @@ class GenerateReportServices
          protected StudentClassesRepository $studentClassesRepository,
     ){ }
 
-    public function attendanceDailyReport(array $filter, ExportFileInferface $exportFile)
+    public function attendanceDailyReport(array $filter, ExportFileInferface $exportFile, string $path)
     {
          $attendances = $this->attendanceRepository->findAttendanceRecord($filter['class_id'], $filter['date']);
          $class = $this->classesRepository->show($filter['class_id']);
 
-         return $exportFile->export('report.template.pdf.DailyAttendanceReport', [
-                                                                                   'attendances' => $attendances,
-                                                                                   'class' => $class[0],
-                                                                                   'date_attendance' => date('F d, Y', strtotime($filter['date']))
-                                                                                 ]);
+         return $exportFile->export($path, [
+                                             'attendances' => $attendances,
+                                             'class' => $class[0],
+                                             'date_attendance' => date('F d, Y', strtotime($filter['date']))
+                                           ]);
     }
 
     public function attendanceDailyReportAdmin(string $date, ExportFileInferface $exportFile)
@@ -38,11 +38,11 @@ class GenerateReportServices
                                                                                  ]);
     }
 
-    public function generateAdminReport($date)
+    public function generateAdminReport(string $date)
     { 
        return  User::where('role', 'teacher')
-                   ->with(['classes' => function($query){
-                        $query->where('academic_year', date('Y'));
+                   ->with(['classes' => function($query) use($date){
+                        $query->where('academic_year', date('Y' , strtotime($date)));
                    }])
                    ->whereHas('classes', function($query) use($date){
                         $query->where('academic_year', date('Y' , strtotime($date)));

@@ -7,6 +7,7 @@
                   <span class=" text-xs md:text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
                   <div class="flex space-x-2"> 
                      <ExportButton route-name="teacher.report.generated" :fields="exportFields('pdf')" color="bg-red-600">PDF</ExportButton>
+                     <ExportButton route-name="teacher.report.generated" :fields="exportFields('excel')" color="bg-green-600">Excel</ExportButton>
                    </div>
                </div> 
             </div>
