@@ -9,7 +9,8 @@
                    <InputComponent v-model="form.email" input-label="Email" input-name="email" input-place-holder="Enter email..." :input-error="form.errors.email"/>
                    <InputComponent v-model="form.password" input-label="Password" input-name="password" input-type="password" input-place-holder="Enter password..." :input-error="form.errors.password"/>
                    <br>
-                   <button class=" w-full mt-3 py-2 text-sm rounded bg-indigo-600 text-white text-center" :disabled="form.processing">Login</button>
+                   <!-- <button class=" w-full mt-3 py-2 text-sm rounded bg-indigo-600 text-white text-center" :disabled="form.processing">Login</button> -->
+                   <ButtonSubmit class="w-full" :processing="form.processing" :text="['Login', 'Log-ining']"/>
                 </form>
             </div>
         </div>
@@ -18,6 +19,7 @@
 
 <script setup>
 import InputComponent from '../Shared/InputComponent.vue';
+import ButtonSubmit from '../Shared/ButtonSubmit.vue';
 import { useForm } from '@inertiajs/vue3'; 
 
 const form = useForm({

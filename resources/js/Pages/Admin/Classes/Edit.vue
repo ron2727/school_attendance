@@ -49,7 +49,7 @@
           </div>
           <div class="flex items-center justify-between mt-5">
                <button v-if="!teacherClass.deleted_at" @click="deleteSubmit()" type="button" class=" text-sm text-red-600">Delete class</button>
-               <button type="submit" class=" px-3 py-2 text-sm bg-indigo-600 text-white rounded" :disabled="form.processing">Submit</button>
+               <ButtonSubmit :processing="form.processing"/>         
           </div>
         </form>
       </div>
@@ -62,6 +62,7 @@
   import NoDataMessage from '../../Shared/NoDataMessage.vue';
   import SelectDateYear from '../../Shared/SelectDateYear.vue';
   import AlertRestore from '../../Shared/AlertRestore.vue';
+  import ButtonSubmit from '../../Shared/ButtonSubmit.vue';
   import { useForm, router } from '@inertiajs/vue3'; 
   import { ref, watch, onMounted } from 'vue';
   import { debounce } from 'lodash';

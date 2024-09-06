@@ -10,7 +10,7 @@
             <InputComponent v-model="form.gender" input-label="Gender" input-name="gender" input-place-holder="Enter gender..." :input-error="$page.props.errors.gender"/> 
             <div class="flex items-center justify-between mt-5">
                <button v-if="!student.deleted_at" @click="deleteSubmit()" type="button" class=" text-sm text-red-600">Delete student</button>
-               <button type="submit" class=" px-3 py-2 text-sm bg-indigo-600 text-white rounded" :disabled="form.processing">Submit</button>
+               <ButtonSubmit :processing="form.processing"/>
             </div>
           </form>
        </div>
@@ -20,6 +20,7 @@
 <script setup>
 import InputComponent from '../../Shared/InputComponent.vue';
 import AlertRestore from '../../Shared/AlertRestore.vue';
+import ButtonSubmit from '../../Shared/ButtonSubmit.vue';
 import { useForm, router} from '@inertiajs/vue3';
 const props = defineProps({
     student: Object
@@ -32,7 +33,7 @@ const form = useForm({
 })
 
 const handleSubmit = () => {
-  form.put(route('student.update', {student: props.student.id}), {preserveState: false})
+  form.put(route('student.update', {student: props.student.id}), {preserveState: false});
 }
 
 const deleteSubmit = () => {

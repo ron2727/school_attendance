@@ -7,7 +7,7 @@
                 <InputComponent v-model="form.lastName" input-label="Last name" input-name="lastName" input-place-holder="Enter last name..." :input-error="form.errors.lastName"/>
             </div>
             <InputComponent v-model="form.gender" input-label="Gender" input-name="gender" input-place-holder="Enter gender..." :input-error="form.errors.gender"/> 
-            <button type="submit" class=" px-3 py-2 text-sm bg-indigo-600 text-white rounded" :disabled="form.processing">Submit</button>
+            <ButtonSubmit :processing="form.processing"/>
           </form>
        </div>
     </MainContainer>
@@ -15,6 +15,7 @@
 
 <script setup>
 import InputComponent from '../../Shared/InputComponent.vue';
+import ButtonSubmit from '../../Shared/ButtonSubmit.vue';
 import { useForm } from '@inertiajs/vue3'; 
 
 const form = useForm({

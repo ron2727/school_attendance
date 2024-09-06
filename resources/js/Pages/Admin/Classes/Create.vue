@@ -47,7 +47,7 @@
           <InputComponent v-model="form.time_to" input-type="time" input-label="Time to" input-name="time_to"
             input-place-holder="Enter time to..." :input-error="form.errors.time_to" />
         </div>
-        <button type="submit" class=" px-3 py-2 text-sm bg-indigo-600 text-white rounded" :disabled="form.processing">Submit</button>
+        <ButtonSubmit :processing="form.processing"/>
       </form>
     </div>
   </MainContainer>
@@ -58,6 +58,7 @@ import DropDown from '../../Shared/DropDown.vue';
 import InputComponent from '../../Shared/InputComponent.vue'; 
 import NoDataMessage from '../../Shared/NoDataMessage.vue';
 import SelectDateYear from '../../Shared/SelectDateYear.vue';
+import ButtonSubmit from '../../Shared/ButtonSubmit.vue';
 import { useForm, router } from '@inertiajs/vue3'; 
 import { ref, watch } from 'vue';
 import { debounce } from 'lodash';
