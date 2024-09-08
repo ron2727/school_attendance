@@ -1,4 +1,7 @@
 <template>
+    <Head>
+      <title>School Attendance</title>
+    </Head>
     <div class=" w-screen h-screen flex justify-center items-center bg-gray-100">
         <div class="wrapper-login max-w-96 w-full border bg-white rounded-lg overflow-x-hidden">
             <div class=" bg-indigo-600">
@@ -23,6 +26,7 @@
 import InputComponent from '../Shared/InputComponent.vue';
 import ButtonSubmit from '../Shared/ButtonSubmit.vue';
 import { useForm } from '@inertiajs/vue3'; 
+import Head from '@inertiajs/vue3';
 
 const form = useForm({
     email: '',
