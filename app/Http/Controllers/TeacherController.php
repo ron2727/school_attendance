@@ -45,15 +45,7 @@ class TeacherController extends Controller
                ->route('teacher.index')
                ->with('success', 'New teacher was successfully created!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+  
     /**
      * Show the form for editing the specified resource.
      */

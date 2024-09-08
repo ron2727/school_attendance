@@ -43,15 +43,7 @@ class StudentController extends Controller
                ->route('student.index')
                ->with('success', 'New student was successfully created!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Student $student)
-    {
-        //
-    }
-
+  
     /**
      * Show the form for editing the specified resource.
      */

@@ -59,16 +59,8 @@ class ClassesController extends Controller
         return redirect()
                ->route('classes.index')
                ->with('success', 'Class successfully added!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Classes $classes)
-    {
-        //
-    }
-
+    } 
+    
     /**
      * Show the form for editing the specified resource.
      */

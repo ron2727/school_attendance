@@ -62,9 +62,7 @@ onMounted(() => {
         search.value = getDateToday();
     }
 })
-
-// const academic_year = ref(props.filters.academic_year);
-
+  
 watch(search, debounce((newValue) => {
     router
    .get(

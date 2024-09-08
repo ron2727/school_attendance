@@ -24,14 +24,7 @@ class AttendanceController extends Controller
 
         return inertia('Teacher/Attendance/Classes', ['classes' => $classes]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+ 
 
     /**
      * Store a newly created resource in storage.
@@ -41,23 +34,7 @@ class AttendanceController extends Controller
         $this->attendanceRepository->store($request->input());
 
         return back()->with('success', 'The attendance for this class has been recorded!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    }  
 
     /**
      * Update the specified resource in storage.
@@ -67,15 +44,7 @@ class AttendanceController extends Controller
         $this->attendanceRepository->update($request->input());
 
         return back()->with('success', 'The class attendance has been updated!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    } 
 
     public function classStudents($id)
     {   

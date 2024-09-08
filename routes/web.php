@@ -9,24 +9,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentClassesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\TeacherReportController;
-use App\Http\Controllers\UserController;
-use App\Models\Attendance;
-use App\Models\Classes;
-use App\Models\Student;
-use App\Models\StudentClasses;
-use App\Models\User;
-use App\Repositories\AttendanceRepository;
-use App\Repositories\StudentClassesRepository;
-use App\Repositories\TeacherRepository;
-use App\Services\GenerateReportServices;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use Spatie\LaravelPdf\Facades\Pdf;
+use App\Http\Controllers\TeacherReportController; 
+use Illuminate\Support\Facades\Route; 
 
 Route::middleware('guest')->group(function(){ 
     Route::inertia('/','Auth/Login')->name('login');
@@ -79,49 +63,4 @@ Route::middleware('auth')->group(function(){
     }); 
 
 });
-
-
-Route::get('test', function(Request $request, GenerateReportServices $generateReport){
-    
-
-    return $generateReport->generateAdminReport('2024-09-03');
  
-});
-
-Route::get('tests', function(Request $request, TeacherRepository $teacherRepository){
-    
-
-    return  $teacherRepository->randomOrder(null);
- 
-});
-  
-// return  User::where('role', 'teacher')->
-//                  with(['classes' => function($query){
-//                      $query->where('academic_year', date('Y'));
-//                  }])->
-//                  whereHas('classes', function($query){
-//                     $query->where('academic_year', date('Y'));
-//                  })->get()
-//                  ->map(function($item){
-                       
-//                     foreach ($item['classes'] as $key => $class) {
-//                        $item['classes'][$key]['students'] = StudentClasses::where('class_id', $class['id'])->count();
-//                        $item['classes'][$key]['present_total'] = Attendance::where('class_id', $class['id'])
-//                                                                             ->where('date', date('Y-m-d', strtotime('2024-09-4')))
-//                                                                             ->where('status', 'present')
-//                                                                             ->count();
-//                        $item['classes'][$key]['absent_total'] = Attendance::where('class_id', $class['id'])
-//                                                                             ->where('date', date('Y-m-d', strtotime('2024-09-4')))
-//                                                                             ->where('status', 'absent')
-//                                                                             ->count();                                                   
-//                     }
-//                        $item['presents_overall_total'] = collect($item['classes'])
-//                                                          ->reduce(fn($carry, $item) => $carry + $item['present_total'], 0);
-//                        $item['absents_overall_total'] = collect($item['classes'])
-//                                                          ->reduce(fn($carry, $item) => $carry + $item['absent_total'], 0);
-//                        $item['students_overall_total'] = collect($item['classes'])
-//                                                          ->reduce(fn($carry, $item) => $carry + $item['students'], 0); 
-//                        $item['classes'] = count($item['classes']);
-
-//                        return $item;
-//                  });
