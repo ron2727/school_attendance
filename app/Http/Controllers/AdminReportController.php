@@ -13,8 +13,11 @@ class AdminReportController extends Controller
 
     public function index(Request $request)
     { 
-
-        $generated = $this->generateReportServices->generateAdminReport($request->input('search')); 
+        $current_date = now('Asia/Manila');
+        if ($request->has('search')) {
+            $current_date = $request->input('search');
+        }
+        $generated = $this->generateReportServices->generateAdminReport($current_date); 
 
         return inertia('Admin/Report/Generate', [
                                                      'generated' => $generated, 
