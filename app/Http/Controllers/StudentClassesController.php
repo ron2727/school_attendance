@@ -13,10 +13,10 @@ class StudentClassesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StudentClassesRequest $request)
+    public function store(Request $request)
     {
-        $this->studentClassesRepository->store($request->validated());
+        $this->studentClassesRepository->storeStudents($request->all());
 
-        return back()->with('success', 'Student successfully added in this class');
+        return back()->with('success', 'Student/s successfully added in the class');
     } 
 }

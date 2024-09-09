@@ -14,7 +14,7 @@ class AttendanceRepository
     {
        return $this->attendance
                    ->where('class_id', $class_id)
-                   ->where('date', date('Y-m-d'))
+                   ->where('date', now('Asia/Manila')->format('Y-m-d'))
                    ->get();
     }
 
@@ -25,7 +25,7 @@ class AttendanceRepository
                'class_id' => $data['class_id'],
                'student_id' => $user_id,
                'status' => $status,
-               'date' => date('Y-m-d')
+               'date' => now('Asia/Manila')->format('Y-m-d')
            ]);
         }
  
@@ -38,9 +38,9 @@ class AttendanceRepository
                 ->updateOrInsert([ 
                     'class_id' => $data['class_id'],
                     'student_id' => $user_id,
-                    'date' => date('Y-m-d')
+                    'date' => now('Asia/Manila')->format('Y-m-d')
                 ],
-                ['status' => $status,]);
+                ['status' => $status]);
         }
  
     }
@@ -49,11 +49,24 @@ class AttendanceRepository
     {
        return $this->attendance
                    ->where('class_id', $class_id)
-                   ->where('date', date('Y-m-d'))
+                   ->where('date', now('Asia/Manila')->format('Y-m-d'))
                    ->count() > 0;
     }
 
     public function findAttendanceRecord($class_id, $date)
+    {
+        return $this->attendance 
+                    ->where('class_id', $class_id)
+                    ->where('date', $date)
+                    ->with('student') 
+                    ->whereHas('student', function($query){
+                        $query->where('deleted_at', NULL);
+                     })
+                    ->paginate(8) 
+                    ->withQueryString();
+    }
+
+    public function findAttendanceAllRecord($class_id, $date)
     {
         return $this->attendance 
                     ->where('class_id', $class_id)

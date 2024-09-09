@@ -3,7 +3,7 @@
         <div class=" max-w-xl bg-white p-5 rounded"> 
             <div class="flex justify-between">
                <InputComponent v-model="search" input-label="Date" input-name="date" input-type="date"/>
-               <div class="flex flex-col" v-if="generated.length">
+               <div class="flex flex-col" v-if="generated.data.length">
                   <span class=" text-xs md:text-sm text-gray-500 mt-1 mb-2 font-bold">Export to</span>
                   <div class="flex space-x-2"> 
                      <ExportButton route-name="teacher.report.generated" :fields="exportFields('pdf')" color="bg-red-600">PDF</ExportButton>
@@ -21,8 +21,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="generated.length" 
-                            v-for="generate in generated" 
+                        <tr v-if="generated.data.length" 
+                            v-for="generate in generated.data" 
                             class=" text-gray-500 border-b border-b-gray-200 even:bg-gray-50">
                             <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.student.firstName + ' ' + generate.student.lastName}}</td>
                             <td class=" px-3 py-2 text-xs md:text-sm">{{ generate.status }}</td>
@@ -34,8 +34,9 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> 
             </div> 
+            <Pagination :pagination="generated"/>
         </div>
     </MainContainer>
 </template>
@@ -43,25 +44,26 @@
 <script setup>
 import InputComponent from '../../Shared/InputComponent.vue'; 
 import NoDataMessage from '../../Shared/NoDataMessage.vue';
-import ExportButton from '../../Shared/ExportButton.vue'; 
+import ExportButton from '../../Shared/ExportButton.vue';  
+import Pagination from '../../Shared/Pagination.vue';  
 import { router } from '@inertiajs/vue3';
 import { ref, watch, onMounted } from 'vue'  
 import { debounce } from 'lodash'; 
 
  
 const props = defineProps({
-    generated: Array, 
+    generated: Object, 
     teacherClass: Object,
     filters: String,
 })
 
 const search = ref(props.filters);
 
-onMounted(() => {
-    if (!props.filters) {
-        search.value = getDateToday();
-    }
-})
+// onMounted(() => {
+//     if (!props.filters) {
+//         search.value = getDateToday();
+//     }
+// })
   
 watch(search, debounce((newValue) => {
     router

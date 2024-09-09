@@ -76,7 +76,7 @@ class ClassesRepository
         
         return $this->classes->count();
     }
-
+  
     public function teacherClassesCount(){
         
         return $this->classes

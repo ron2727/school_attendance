@@ -25,14 +25,14 @@ class TeacherReportController extends Controller
 
     public function generate(Request $request, string $class_id)
     { 
-
-        $generated = $this->attendanceRepository->findAttendanceRecord($class_id, $request->input('search'));
+        $date_search = $request->has('search') ? $request->input('search') : now('Asia/Manila')->format('Y-m-d');
+        $generated = $this->attendanceRepository->findAttendanceRecord($class_id, $date_search);
         $teacherClass = $this->classesRepository->find($class_id);
 
         return inertia('Teacher/Report/Generate', [
                                                      'generated' => $generated,
                                                      'teacherClass' => $teacherClass,
-                                                     'filters' => $request->input('search')
+                                                     'filters' => $date_search
                                                   ]);
     }
 

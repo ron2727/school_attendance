@@ -25,8 +25,7 @@
 <script setup>
 import InputComponent from '../Shared/InputComponent.vue';
 import ButtonSubmit from '../Shared/ButtonSubmit.vue';
-import { useForm } from '@inertiajs/vue3'; 
-import Head from '@inertiajs/vue3';
+import { useForm, Head } from '@inertiajs/vue3';  
 
 const form = useForm({
     email: '',

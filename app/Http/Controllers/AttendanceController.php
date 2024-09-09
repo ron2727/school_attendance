@@ -58,7 +58,7 @@ class AttendanceController extends Controller
                                                     'studentsClass' => $studentsOfClasses, 
                                                     'isClassHasAttendance' => $isClassHasAttendance,
                                                     'attendances' => $attendances,
-                                                    'dateToday' => date('M d, Y')
+                                                    'dateToday' => now('Asia/Manila')->format('M d, Y')
                                                    ]);
     }
 }

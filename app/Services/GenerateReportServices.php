@@ -18,7 +18,7 @@ class GenerateReportServices
 
     public function attendanceDailyReport(array $filter, ExportFileInferface $exportFile, string $path)
     {
-         $attendances = $this->attendanceRepository->findAttendanceRecord($filter['class_id'], $filter['date']);
+         $attendances = $this->attendanceRepository->findAttendanceAllRecord($filter['class_id'], $filter['date']);
          $class = $this->classesRepository->show($filter['class_id']);
 
          return $exportFile->export($path, [

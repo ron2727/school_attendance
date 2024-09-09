@@ -29,13 +29,13 @@ class DashboardController extends Controller
                                              'teacherTotal' => $teacher_total,
                                              'classesTotal' => $classes_total,
                                              'studentTotal' => $student_total,
-                                             'dateToday' => date('F d, Y')
+                                             'dateToday' => now('Asia/Manila')->format('F d, Y')
                                           ]);
     }
 
     public function teacher()
     {  
-        $classes_total = $this->classesRepository->count();
+        $classes_total = $this->classesRepository->teacherClassesCount();
         $student_total = $this->classesRepository->studentsClassesCount();
         $absent_each_class = $this->classesRepository->absentsEachClass();
         
@@ -43,7 +43,7 @@ class DashboardController extends Controller
                                              'classesTotal' => $classes_total,
                                              'studentTotal' => $student_total,
                                              'chartData' => $absent_each_class,
-                                             'dateToday' => date('F d, Y')
+                                             'dateToday' => now('Asia/Manila')->format('F d, Y')
                                           ]);
     } 
 }

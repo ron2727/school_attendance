@@ -14,6 +14,16 @@ class StudentClassesRepository
         return $this->studentClasses->create($data);
     }
 
+    public function storeStudents($data)
+    {
+        foreach ($data['students'] as $student) {
+            $this->studentClasses->create([
+                'class_id' => $data['class_id'],
+                'student_id' => $student['id']
+            ]);
+        }
+    }
+
     public function studentsOfClass($class_id)
     {
         return DB::table('students_classes')

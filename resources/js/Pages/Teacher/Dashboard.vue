@@ -44,7 +44,7 @@ const options = ref({
         scales: {
             y: {
                 beginAtZero: true, 
-                max: props.chartData.totals.reduce((total, item) => item + total)
+                max: Math.max(...props.chartData.totals),
             }
         },
         plugins: {
